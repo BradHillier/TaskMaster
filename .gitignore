@@ -2,4 +2,11 @@ bin
 lib
 include
 pyvenv.cfg
+__pycache__
+.DS_Store
+
+# vim swap files
+*.swp
+*.swn
+*.swo
 
