@@ -27,7 +27,7 @@ class ListContentView(customtkinter.CTkFrame):
 
         self.header_pady = 0
         self.header_padx = 10
-        self.list_name_font = customtkinter.CTkFont(family="Monospace", size=36)
+        self.list_name_font = customtkinter.CTkFont(family="Arial", size=36)
 
         self.task_height = 40
         #=====================================================================
@@ -39,6 +39,11 @@ class ListContentView(customtkinter.CTkFrame):
         self._createListTitle()
         self._createHeader()
         self._createTaskList()
+
+
+        btn_plus = tkinter.StringVar(value="+")
+        button = customtkinter.CTkButton(master=self, textvariable=btn_plus, width=48, font=self.list_name_font, corner_radius=48)
+        button.grid(row=1, column=3, padx=18, pady=18, sticky='se')
 
     def _createListTitle(self):
         self.label = customtkinter.CTkLabel(self, 
