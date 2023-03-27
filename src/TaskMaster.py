@@ -5,11 +5,12 @@ import customtkinter
 from ListContentView import ListContentView
 from SidebarView import SideBar
 from TopbarView import TopBar
+from Login import LoginPage
 
 
-class TaskMaster(customtkinter.CTk):
-    def __init__(self):
-        super().__init__()
+class TaskMaster(customtkinter.CTkFrame):
+    def __init__(self, master, **kwargs):
+        super().__init__(master, **kwargs)
 
         # allow side bar and list view to expand vertically with the window
         self.grid_rowconfigure(1, weight=1)
@@ -33,5 +34,23 @@ class TaskMaster(customtkinter.CTk):
         # allows task list buttons text entry to hide when clicking outside it
         self.bind('<Button-1>', lambda event : event.widget.focus())
 
-task_master = TaskMaster()
-task_master.mainloop()
+class App(customtkinter.CTk):
+
+    def __init__(self):
+        super().__init__()
+        self.grid_rowconfigure(0, weight=1)
+        self.grid_columnconfigure(0, weight=1)
+
+        self.login = LoginPage(master=self, fg_color='transparent')
+        self.login.grid(sticky='nsew')
+
+        # when the login page is hidden, show the main view
+        self.login.bind('<Unmap>', self.show_main_view)
+        self.task_master = TaskMaster(self, fg_color='transparent')
+
+    def show_main_view(self, event):
+        self.task_master.grid(row=0, column=0, sticky='nsew')
+
+if __name__ == '__main__':
+    task_master = App()
+    task_master.mainloop()

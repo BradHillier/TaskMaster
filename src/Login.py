@@ -43,6 +43,10 @@ class LoginPage(ctk.CTkFrame):
 
         if username == "admin" and password == "password":
             messagebox.showinfo("Login", "Login successful!")
+
+            # the windowing being hidden is currently the trigger for switching 
+            # to the logged in view
+            self.grid_remove()
         else:
             messagebox.showerror("Login", "Incorrect username or password")
 
@@ -113,5 +117,5 @@ if __name__ == '__main__':
 
     # fg_transparent hides the default frame background colour
     login_page = LoginPage(master=root, fg_color='transparent')
-    login_page.grid(row=0, column=0, padx=100, pady=100, sticky='nsew')
+    login_page.grid(row=0, column=0, sticky='nsew')
     root.mainloop()
