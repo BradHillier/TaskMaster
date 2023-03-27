@@ -1,4 +1,5 @@
-import tkinter as tk
+import tkinter 
+import customtkinter as ctk
 from tkinter import messagebox
 
 class LoginPage:
@@ -6,22 +7,22 @@ class LoginPage:
         self.master = master
         master.title("Login")
 
-        self.username_label = tk.Label(master, text="Username")
+        self.username_label = ctk.CTkLabel(master, text="Username")
         self.username_label.pack()
 
-        self.username_entry = tk.Entry(master)
+        self.username_entry = ctk.CTkEntry(master)
         self.username_entry.pack()
 
-        self.password_label = tk.Label(master, text="Password")
+        self.password_label = ctk.CTkLabel(master, text="Password")
         self.password_label.pack()
 
-        self.password_entry = tk.Entry(master, show="*")
+        self.password_entry = ctk.CTkEntry(master, show="*")
         self.password_entry.pack()
 
-        self.login_button = tk.Button(master, text="Login", command=self.login)
+        self.login_button = ctk.CTkButton(master, text="Login", command=self.login)
         self.login_button.pack()
 
-        self.register_button = tk.Button(master, text="Register", command=self.register)
+        self.register_button = ctk.CTkButton(master, text="Register", command=self.register)
         self.register_button.pack()
 
     def login(self):
@@ -34,7 +35,7 @@ class LoginPage:
             messagebox.showerror("Login", "Incorrect username or password")
 
     def register(self):
-        register_window = tk.Toplevel(self.master)
+        register_window = ctk.CTkToplevel(self.master)
         register_page = RegisterPage(register_window)
 
 class RegisterPage:
@@ -42,25 +43,25 @@ class RegisterPage:
         self.master = master
         master.title("Register")
 
-        self.username_label = tk.Label(master, text="Username")
+        self.username_label = ctk.CTkLabel(master, text="Username")
         self.username_label.pack()
 
-        self.username_entry = tk.Entry(master)
+        self.username_entry = ctk.CTkEntry(master)
         self.username_entry.pack()
 
-        self.password_label = tk.Label(master, text="Password")
+        self.password_label = ctk.CTkLabel(master, text="Password")
         self.password_label.pack()
 
-        self.password_entry = tk.Entry(master, show="*")
+        self.password_entry = ctk.CTkEntry(master, show="*")
         self.password_entry.pack()
 
-        self.confirm_password_label = tk.Label(master, text="Confirm Password")
+        self.confirm_password_label = ctk.CTkLabel(master, text="Confirm Password")
         self.confirm_password_label.pack()
 
-        self.confirm_password_entry = tk.Entry(master, show="*")
+        self.confirm_password_entry = ctk.CTkEntry(master, show="*")
         self.confirm_password_entry.pack()
 
-        self.register_button = tk.Button(master, text="Register", command=self.register)
+        self.register_button = ctk.CTkButton(master, text="Register", command=self.register)
         self.register_button.pack()
 
     def register(self):
@@ -74,6 +75,6 @@ class RegisterPage:
             messagebox.showinfo("Register", "Account created successfully!")
             self.master.destroy()
 
-root = tk.Tk()
+root = ctk.CTk()
 login_page = LoginPage(root)
 root.mainloop()
