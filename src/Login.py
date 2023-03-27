@@ -48,6 +48,7 @@ class LoginPage:
 
     def register(self):
         register_window = ctk.CTkToplevel(self.master)
+        register_window = ctk.CTkToplevel(self.master)
         register_page = RegisterPage(register_window)
 
 class RegisterPage:
