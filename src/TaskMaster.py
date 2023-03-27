@@ -1,3 +1,5 @@
+#!../bin/python3.9
+
 import tkinter 
 import customtkinter
 from ListContentView import ListContentView
@@ -27,6 +29,9 @@ class TaskMaster(customtkinter.CTk):
         # a scrollable collection of tasks
         self.list_view_frame = ListContentView(master=self, fg_color="transparent")
         self.list_view_frame.grid(row=1, column=1, pady=(40, 0), sticky="nsew");
+
+        # allows task list buttons text entry to hide when clicking outside it
+        self.bind('<Button-1>', lambda event : event.widget.focus())
 
 task_master = TaskMaster()
 task_master.mainloop()
