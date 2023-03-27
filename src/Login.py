@@ -3,39 +3,39 @@ import customtkinter as ctk
 from tkinter import messagebox
 from tkinter import ttk
 
-def create_blue_theme(style):
-    style.theme_create("blue", parent="alt", settings={
-        "TCTkLabel": {"configure": {"foreground": "#FFFFFF"}},
-        "TEntry": {"configure": {"foreground": "#000000"}},
-        "TButton": {"configure": {"background": "#3366CC", "foreground": "#FFFFFF"}},
-    })
 
-class LoginPage:
-    def __init__(self, master):
+class LoginPage(ctk.CTkFrame):
+    def __init__(self, master, **kwargs):
+        super().__init__(master, **kwargs)
         self.master = master
         master.title("Login")
 
-        # Create a custom style object
-        self.style = ttk.Style(master)
-        self.style.theme_use("blue")
+        # allows the input box to expand with the window
+        self.grid_columnconfigure(1, weight=1)
 
-        self.username_CTkLabel = ctk.CTkLabel(master, text="Username")
-        self.username_CTkLabel.grid(row=0, column=0, padx=10, pady=5)
+        # adds hidden rows before and after content which help to keep
+        # the form centered in the window
+        self.grid_rowconfigure(0, weight=1)
+        self.grid_rowconfigure(5, weight=1)
 
-        self.username_entry = ctk.CTkEntry(master)
-        self.username_entry.grid(row=0, column=1, padx=10, pady=5)
+        self.username_CTkLabel = ctk.CTkLabel(self, text="Username")
+        self.username_CTkLabel.grid(row=1, column=0, padx=10, pady=5)
 
-        self.password_CTkLabel = ctk.CTkLabel(master, text="Password")
-        self.password_CTkLabel.grid(row=1, column=0, padx=10, pady=5)
+        self.username_entry = ctk.CTkEntry(self)
+        # sticky='nsew' allows the entry to take up it's entire grid cell
+        self.username_entry.grid(row=1, column=1, padx=10, pady=5, sticky='nsew') 
 
-        self.password_entry = ctk.CTkEntry(master, show="*")
-        self.password_entry.grid(row=1, column=1, padx=10, pady=5)
+        self.password_CTkLabel = ctk.CTkLabel(self, text="Password")
+        self.password_CTkLabel.grid(row=2, column=0, padx=10, pady=5)
 
-        self.login_button = ctk.CTkButton(master, text="Login", command=self.login)
-        self.login_button.grid(row=2, column=0, columnspan=2, padx=10, pady=5)
+        self.password_entry = ctk.CTkEntry(self, show="*")
+        self.password_entry.grid(row=2, column=1, padx=10, pady=5, sticky='nsew')
 
-        self.register_button = ctk.CTkButton(master, text="Register", command=self.register)
-        self.register_button.grid(row=3, column=0, columnspan=2, padx=10, pady=5)
+        self.login_button = ctk.CTkButton(self, text="Login", command=self.login)
+        self.login_button.grid(row=3, column=0, columnspan=2, padx=10, pady=5)
+
+        self.register_button = ctk.CTkButton(self, text="Register", command=self.register)
+        self.register_button.grid(row=4, column=0, columnspan=2, padx=10, pady=5)
 
     def login(self):
         username = self.username_entry.get()
@@ -48,37 +48,45 @@ class LoginPage:
 
     def register(self):
         register_window = ctk.CTkToplevel(self.master)
-        register_page = RegisterPage(register_window)
+        register_window.grid_rowconfigure(0, weight=1)
+        register_window.grid_columnconfigure(0, weight=1)
+        register_page = RegisterPage(register_window, fg_color='transparent')
+        register_page.grid(row=0, column=0, padx=100, pady=100, sticky='nsew')
 
-class RegisterPage:
-    def __init__(self, master):
+class RegisterPage(ctk.CTkFrame):
+    def __init__(self, master, **kwargs):
+        super().__init__(master, **kwargs)
         self.master = master
         master.title("Register")
 
-        # Create a custom style object
-        self.style = ttk.Style(master)
-        self.style.theme_use("blue")
+        # allows the input box to expand with the window
+        self.grid_columnconfigure(1, weight=1)
 
-        self.username_CTkLabel = ctk.CTkLabel(master, text="Username")
-        self.username_CTkLabel.grid(row=0, column=0, padx=10, pady=5)
+        # adds hidden rows before and after content which help to keep
+        # the form centered in the window
+        self.grid_rowconfigure(0, weight=1)
+        self.grid_rowconfigure(5, weight=1)
 
-        self.username_entry = ctk.CTkEntry(master)
-        self.username_entry.grid(row=0, column=1, padx=10, pady=5)
+        self.username_CTkLabel = ctk.CTkLabel(self, text="Username")
+        self.username_CTkLabel.grid(row=1, column=0, padx=10, pady=5)
 
-        self.password_CTkLabel = ctk.CTkLabel(master, text="Password")
-        self.password_CTkLabel.grid(row=1, column=0, padx=10, pady=5)
+        self.username_entry = ctk.CTkEntry(self)
+        self.username_entry.grid(row=1, column=1, padx=10, pady=5, sticky='nsew')
 
-        self.password_entry = ctk.CTkEntry(master, show="*")
-        self.password_entry.grid(row=1, column=1, padx=10, pady=5)
+        self.password_CTkLabel = ctk.CTkLabel(self, text="Password")
+        self.password_CTkLabel.grid(row=2, column=0, padx=10, pady=5)
 
-        self.confirm_password_CTkLabel = ctk.CTkLabel(master, text="Confirm Password")
-        self.confirm_password_CTkLabel.grid(row=2, column=0, padx=10, pady=5)
+        self.password_entry = ctk.CTkEntry(self, show="*")
+        self.password_entry.grid(row=2, column=1, padx=10, pady=5, sticky='nsew')
 
-        self.confirm_password_entry = ctk.CTkEntry(master, show="*")
-        self.confirm_password_entry.grid(row=2, column=1, padx=10, pady=5)
+        self.confirm_password_CTkLabel = ctk.CTkLabel(self, text="Confirm Password")
+        self.confirm_password_CTkLabel.grid(row=3, column=0, padx=10, pady=5)
 
-        self.register_button = ctk.CTkButton(master, text="Register", command=self.register)
-        self.register_button.grid(row=3, column=0, columnspan=2, padx=10, pady=5)
+        self.confirm_password_entry = ctk.CTkEntry(self, show="*")
+        self.confirm_password_entry.grid(row=3, column=1, padx=10, pady=5, sticky='nsew')
+
+        self.register_button = ctk.CTkButton(self, text="Register", command=self.register)
+        self.register_button.grid(row=4, column=0, columnspan=2, padx=10, pady=5)
 
     def register(self):
         username = self.username_entry.get()
@@ -95,10 +103,15 @@ class RegisterPage:
             messagebox.showinfo("Register", "Registration successful!")
             self.master.destroy()
 
-root = ctk.CTk()
 
-style = ttk.Style(root)
-create_blue_theme(style)
+if __name__ == '__main__':
+    root = ctk.CTk()
 
-login_page = LoginPage(root)
-root.mainloop()
+    # allows the widget place in row 0 and column 0 to expand 
+    root.grid_rowconfigure(0, weight=1)
+    root.grid_columnconfigure(0, weight=1)
+
+    # fg_transparent hides the default frame background colour
+    login_page = LoginPage(master=root, fg_color='transparent')
+    login_page.grid(row=0, column=0, padx=100, pady=100, sticky='nsew')
+    root.mainloop()
