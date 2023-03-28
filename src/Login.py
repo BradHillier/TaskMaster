@@ -30,6 +30,7 @@ class LoginPage(ctk.CTkFrame):
 
         self.password_entry = ctk.CTkEntry(self, show="*")
         self.password_entry.grid(row=2, column=1, padx=10, pady=5, sticky='nsew')
+        self.password_entry.bind('<Return>', self.login)
 
         self.login_button = ctk.CTkButton(self, text="Login", command=self.login)
         self.login_button.grid(row=3, column=0, columnspan=2, padx=10, pady=5)
@@ -37,7 +38,7 @@ class LoginPage(ctk.CTkFrame):
         self.register_button = ctk.CTkButton(self, text="Register", command=self.register)
         self.register_button.grid(row=4, column=0, columnspan=2, padx=10, pady=5)
 
-    def login(self):
+    def login(self, event=None):
         username = self.username_entry.get()
         password = self.password_entry.get()
 
