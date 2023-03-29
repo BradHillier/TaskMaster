@@ -195,6 +195,7 @@ class SideBar(customtkinter.CTkFrame):
                 text="Create List",
                 command=self.add_task_list)
         self.button.grid(row=0, column=0, pady=(10, 40), padx=20, sticky="nwe")
+        self.button.focus()
 
     def select_list(self, widget, event=None):
 
