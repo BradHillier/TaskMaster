@@ -2,16 +2,9 @@ import tkinter
 import customtkinter
 from functools import partial
 
-'''
-'''
-
-
 
 class TaskListNavButton(customtkinter.CTkFrame):
     '''
-    ```python3
-    task_list = TaskListNavButton(master=root, title='my list')
-    ```
     A sidebar button used to switch between list views
 
     The widget has two states: normal and text entry
@@ -84,7 +77,6 @@ class TaskListNavButton(customtkinter.CTkFrame):
 
         :param event: Automatically passed to the method when invoked from a bind event being triggered
         '''
-        import pdb; pdb.set_trace()
         self.entry.insert(0, self.button.cget('text'))
         self.entry.grid(row=0, column=0)
         self.entry.focus()

@@ -8,7 +8,6 @@ class LoginPage(ctk.CTkFrame):
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
         self.master = master
-        master.title("Login")
 
         # allows the input box to expand with the window
         self.grid_columnconfigure(1, weight=1)
