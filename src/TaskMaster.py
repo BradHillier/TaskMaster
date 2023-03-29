@@ -44,7 +44,7 @@ class App(customtkinter.CTk):
         self.grid_columnconfigure(0, weight=1)
 
         self.login = LoginPage(master=self, fg_color='transparent')
-        self.login.grid(padx=100, sticky='nsew')
+        self.login.grid(sticky='nsew')
 
         # when the login page is hidden, show the main view
         self.login.bind('<Unmap>', self.show_main_view)
@@ -54,6 +54,7 @@ class App(customtkinter.CTk):
         self.bind('<Button-1>', lambda event : event.widget.focus())
 
     def show_main_view(self, event):
+        self.geometry('1000x600')
         self.task_master.grid(row=0, column=0, sticky='nsew')
 
 if __name__ == '__main__':

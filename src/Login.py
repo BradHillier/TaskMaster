@@ -10,7 +10,10 @@ class LoginPage(ctk.CTkFrame):
         self.master = master
 
         # allows the input box to expand with the window
-        self.grid_columnconfigure(1, weight=1)
+        self.grid_columnconfigure(2, weight=1)
+
+        # empty columns to center everything horizontally
+        self.grid_columnconfigure((0, 3), weight=1)
 
         # adds hidden rows before and after content which help to keep
         # the form centered in the window
@@ -18,24 +21,24 @@ class LoginPage(ctk.CTkFrame):
         self.grid_rowconfigure(5, weight=1)
 
         self.username_CTkLabel = ctk.CTkLabel(self, text="Username")
-        self.username_CTkLabel.grid(row=1, column=0, padx=10, pady=5)
+        self.username_CTkLabel.grid(row=1, column=1, padx=10, pady=5)
 
         self.username_entry = ctk.CTkEntry(self)
         # sticky='nsew' allows the entry to take up it's entire grid cell
-        self.username_entry.grid(row=1, column=1, padx=10, pady=5, sticky='nsew') 
+        self.username_entry.grid(row=1, column=2, padx=10, pady=5, sticky='nsew') 
 
         self.password_CTkLabel = ctk.CTkLabel(self, text="Password")
-        self.password_CTkLabel.grid(row=2, column=0, padx=10, pady=5)
+        self.password_CTkLabel.grid(row=2, column=1, padx=10, pady=5)
 
         self.password_entry = ctk.CTkEntry(self, show="*")
-        self.password_entry.grid(row=2, column=1, padx=10, pady=5, sticky='nsew')
+        self.password_entry.grid(row=2, column=2, padx=10, pady=5, sticky='nsew')
         self.password_entry.bind('<Return>', self.login)
 
         self.login_button = ctk.CTkButton(self, text="Login", command=self.login)
-        self.login_button.grid(row=3, column=0, columnspan=2, padx=10, pady=5)
+        self.login_button.grid(row=3, column=1, columnspan=2, padx=10, pady=5)
 
         self.register_button = ctk.CTkButton(self, text="Register", command=self.register)
-        self.register_button.grid(row=4, column=0, columnspan=2, padx=10, pady=5)
+        self.register_button.grid(row=4, column=1, columnspan=2, padx=10, pady=5)
 
     def login(self, event=None):
         username = self.username_entry.get()
@@ -64,7 +67,9 @@ class RegisterPage(ctk.CTkFrame):
         master.title("Register")
 
         # allows the input box to expand with the window
+        self.grid_columnconfigure(0, weight=2)
         self.grid_columnconfigure(1, weight=1)
+        self.grid_columnconfigure(3, weight=2)
 
         # adds hidden rows before and after content which help to keep
         # the form centered in the window
@@ -72,25 +77,25 @@ class RegisterPage(ctk.CTkFrame):
         self.grid_rowconfigure(5, weight=1)
 
         self.username_CTkLabel = ctk.CTkLabel(self, text="Username")
-        self.username_CTkLabel.grid(row=1, column=0, padx=10, pady=5)
+        self.username_CTkLabel.grid(row=1, column=1, padx=10, pady=5)
 
         self.username_entry = ctk.CTkEntry(self)
-        self.username_entry.grid(row=1, column=1, padx=10, pady=5, sticky='nsew')
+        self.username_entry.grid(row=1, column=2, padx=10, pady=5, sticky='nsew')
 
         self.password_CTkLabel = ctk.CTkLabel(self, text="Password")
-        self.password_CTkLabel.grid(row=2, column=0, padx=10, pady=5)
+        self.password_CTkLabel.grid(row=2, column=1, padx=10, pady=5)
 
         self.password_entry = ctk.CTkEntry(self, show="*")
-        self.password_entry.grid(row=2, column=1, padx=10, pady=5, sticky='nsew')
+        self.password_entry.grid(row=2, column=2, padx=10, pady=5, sticky='nsew')
 
         self.confirm_password_CTkLabel = ctk.CTkLabel(self, text="Confirm Password")
-        self.confirm_password_CTkLabel.grid(row=3, column=0, padx=10, pady=5)
+        self.confirm_password_CTkLabel.grid(row=3, column=1, padx=10, pady=5)
 
         self.confirm_password_entry = ctk.CTkEntry(self, show="*")
-        self.confirm_password_entry.grid(row=3, column=1, padx=10, pady=5, sticky='nsew')
+        self.confirm_password_entry.grid(row=3, column=2, padx=10, pady=5, sticky='nsew')
 
         self.register_button = ctk.CTkButton(self, text="Register", command=self.register)
-        self.register_button.grid(row=4, column=0, columnspan=2, padx=10, pady=5)
+        self.register_button.grid(row=4, column=1, columnspan=2, padx=10, pady=5)
 
     def register(self):
         username = self.username_entry.get()
