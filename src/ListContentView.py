@@ -1,7 +1,7 @@
 import tkinter
 import customtkinter
 from TaskScrollerView import TaskScrollerView
-
+from AddTask import AddTask
 
 class ListContentView(customtkinter.CTkFrame):
     '''
@@ -44,7 +44,7 @@ class ListContentView(customtkinter.CTkFrame):
 
     def _create_add_task_button(self):
         btn_plus = tkinter.StringVar(value="+")
-        button = customtkinter.CTkButton(master=self, textvariable=btn_plus, width=48, font=self.list_name_font, corner_radius=48)
+        button = customtkinter.CTkButton(master=self, command=self.open_edit_task_page, textvariable=btn_plus, width=48, font=self.list_name_font, corner_radius=48)
         button.grid(row=1, column=3, padx=18, pady=18, sticky='se')
 
     def _createListTitle(self):
@@ -92,3 +92,8 @@ class ListContentView(customtkinter.CTkFrame):
                 columnspan=4, # use the entirety of the grids horizontal space
                 sticky='nsew')
 
+    def open_edit_task_page(self):
+        new_task_window = customtkinter.CTkToplevel(self.master)
+        new_task_window.title("New Task")
+        new_task_page = AddTask(new_task_window, fg_color='transparent')
+        new_task_page.pack(expand=True, fill='both')
