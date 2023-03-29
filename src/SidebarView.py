@@ -100,7 +100,7 @@ class TaskListNavButton(customtkinter.CTkFrame):
                 master=self,
                 fg_color='transparent',
                 text_color=self.highlight_color,
-                text_color_disabled='green',
+                text_color_disabled='white',
                 corner_radius=0,
                 text=' ')   # allows button to initialize before entry
 
