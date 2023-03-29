@@ -25,6 +25,10 @@ class TopBar(customtkinter.CTkFrame):
                                          height=32,
                                          border_width=0,
                                          corner_radius=8,
+                                         command=self.logout,
                                          text="Logout")
         self.button.grid(row=0, column=3, pady=10, padx=10, sticky="e")
+
+    def logout(self):
+        self.master.grid_remove()
 

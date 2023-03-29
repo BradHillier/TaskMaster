@@ -48,14 +48,20 @@ class App(customtkinter.CTk):
 
         # when the login page is hidden, show the main view
         self.login.bind('<Unmap>', self.show_main_view)
+
         self.task_master = TaskMaster(self, fg_color='transparent')
+        self.task_master.bind('<Unmap>', self.show_login_view)
 
         # allows task list buttons text entry to hide when clicking outside it
         self.bind('<Button-1>', lambda event : event.widget.focus())
 
     def show_main_view(self, event):
         self.geometry('1000x600')
-        self.task_master.grid(row=0, column=0, sticky='nsew')
+        self.task_master.grid(sticky='nsew')
+
+    def show_login_view(self, event):
+        self.geometry('500x300')
+        self.login.grid(sticky='nsew')
 
 if __name__ == '__main__':
     task_master = App()
