@@ -36,6 +36,7 @@ class AddTask(ctk.CTkFrame):
         # Task Name Input
         self.task_name_entry = ctk.CTkEntry(self)
         self.task_name_entry.grid(row=1, column=2, columnspan=2, padx=10, pady=5, sticky='nsew')
+        self.task_name_entry.focus()
 
         # Task Desc
         self.task_desc_label = ctk.CTkLabel(self, text="Description:")
