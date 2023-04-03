@@ -1,7 +1,10 @@
+#virtual environment
+venv
 bin
 lib
 include
 pyvenv.cfg
+
 __pycache__
 .DS_Store
 
@@ -9,4 +12,7 @@ __pycache__
 *.swp
 *.swn
 *.swo
+
+#database
+database.sqlite3
 
