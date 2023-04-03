@@ -1,12 +1,27 @@
-DROP TABLE Tasks;
+PRAGMA foreign_keys = ON;
+
+DROP TABLE IF EXISTS Tasks;
 
 CREATE TABLE Tasks (
     taskID      INTEGER PRIMARY KEY AUTOINCREMENT,
-    taskName    TEXT,
+    listID      INTEGER, 
+    username    TEXT,      
+    taskName    TEXT NOT NULL,
     description TEXT,
-    dueDate     NUMERIC,
-    isCompleted NUMERIC,
-    priority    INTEGER
+    dueDate     TEXT NOT NULL,     -- YYYY-MM-DD
+    isCompleted INTEGER NOT NULL,
+    priority    TEXT,
+
+    FOREIGN KEY(listID) REFERENCES TaskLists(listID)
+    FOREIGN KEY(username) REFERENCES Users(username)
 );
 
-INSERT INTO Users VALUES('username','30163935c002fc4e1200906c3d30a9c4956b4af9f6dcaef1eb4b1fcb8fba69e7a7acdc491ea5b1f2864ea8c01b01580ef09defc3b11b3f183cb21d236f7f1a6b', 'user@email.com');
+INSERT INTO Tasks (taskName, username, listID, description, dueDate, isCompleted, priority) VALUES
+('wash the dishes', 'test_user', 1, NULL,'2023-04-21', TRUE, 'high'),
+('do the laundry', 'test_user', 1, NULL,'2023-04-19', TRUE, NULL),
+('mow the lawn', 'test_user', 1, 'cut all the grass in the front yard with my lawn mower', '2023-04-20', TRUE, NULL),
+('Buy groceries', 'test_user', 1, 'Milk, eggs, bread, and cheese', '2023-04-05', 0, 'high'),
+('Pay rent', 'test_user',  1, 'Monthly rent payment for apartment', '2023-04-10', 0, 'high'),
+('Finish report', 'test_user', 1, 'Complete project report and submit to supervisor', '2023-04-15', 0, 'medium'),
+('Plan vacation', 'test_user', 2, 'Research and book flights, accommodations, and activities for upcoming vacation', '2023-05-01', 0, 'low'),
+('Call mom', 'test_user', 2, 'Check in and catch up with mom', '2023-04-07', 0, 'medium');

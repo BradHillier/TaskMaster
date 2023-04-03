@@ -1,8 +1,10 @@
-DROP TABLE Users;
+DROP TABLE IF EXISTS Users;
 
 CREATE TABLE Users (
     username    TEXT PRIMARY KEY,
-    password    TEXT,               -- hashed using sha512 (64 bytes)
-    email       TEXT
+    password    TEXT NOT NULL,               -- hashed using sha512 (64 bytes)
+    email       TEXT NOT NULL
 );
+
+INSERT INTO Users VALUES ('test_user', '123', 'user@example.com');
 
