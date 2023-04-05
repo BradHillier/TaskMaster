@@ -21,27 +21,22 @@ class TaskMaster:
     def changeList(self, task_list: TaskList):
         self.current_list = task_list
         if len(task_list) == 0:
-            self.task_dao.getTasks(task_list)
+            self.current_list.extend(self.task_dao.getTasks(task_list.ID))
 
     def toggleTaskCompleted(self, task: Task):
-        #self.task_dao.update(Task, isCompleted=!task.isCompleted) 
-        pass
+        self.task_dao.update(task.ID, isCompleted = not task.isCompleted) 
 
-    def updateTask(self):
-        pass
+    def updateTask(self, task: Task, **kwargs):
+        self.task_dao.update(task.ID, **kwargs)
 
     def deleteTask(self, task: Task):
-        pass
-
-    def sortTasks(self):
-        # probably not needed as using the 
-        #   `self.current_list.sort(key=func)` 
-        # method is more versitile
-        pass
+        self.task_dao.delete(task.ID)
 
     def createList(self, name: str):
-        new_list = self.task_list_dao.create(self.user.username, name)
-        self.all_lists.append(new_list)
+        list_id = self.task_list_dao.create(self.user.username, name)
+        if list_id != None:
+            new_list = self.task_list_dao.getOne(list_id)
+            self.all_lists.append(new_list)
 
     def renameList(self, task_list: TaskList, name: str):
         self.task_list_dao.rename(task_list.ID, name)
@@ -52,7 +47,7 @@ class TaskMaster:
         self.all_lists.remove(task_list)
 
     def createTask(self, **kwargs):
-        pass
+        self.task_dao.create(**kwargs)
 
     def login(self):
         pass
