@@ -1,16 +1,5 @@
 import sqlite3
-from User import User
-from Task import Task
-from TaskList import TaskList
-
-class TaskListSerializer:
-
-    def serialize(self, data: tuple):
-        return TaskList(ID=data[0], name=data[1], user=data[2])
-
-    def deserialize(task_list: TaskList):
-        pass
-
+from TaskListSerializer import TaskListSerializer
 
 
 class TaskListDAO:
@@ -20,14 +9,14 @@ class TaskListDAO:
         self.db = db
         self.serializer = TaskListSerializer()
 
-    def create(self, username: str, list_name: str) -> TaskList:
+    def create(self, username: str, list_name: str) -> object:
         """Create a new TaskList
 
         Params:
             user (str): the username of the creator of the task list
             name (str): the name of the TaskList
         Returns:
-            The newly created TaskList object
+            A new TaskList object created by the serializer
         """
         with sqlite3.connect(self.db) as conn:
             cur = conn.cursor()
@@ -39,7 +28,7 @@ class TaskListDAO:
             conn.commit()
             return self.serializer.serialize( (ID, list_name, username) )
 
-    def getAll(self, username: str ) -> list[TaskList]:
+    def getAll(self, username: str ) -> list:
         """Retrieve all the TaskLists owned by a specific user
 
         Params:
