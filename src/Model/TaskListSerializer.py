@@ -2,9 +2,12 @@ from TaskList import TaskList
 
 class TaskListSerializer:
 
-    def serialize(self, data: tuple):
-        return TaskList(ID=data[0], name=data[1], user=data[2])
+    def serialize(self, **kwargs):
+        raise NotImplemented
 
-    def deserialize(task_list: TaskList):
-        pass
+    def deserialize(self, **kwargs):
+        return TaskList(
+            ID = kwargs.get('listID'), 
+            name = kwargs.get('listName'), 
+            user = kwargs.get('username'))
 
