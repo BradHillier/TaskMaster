@@ -22,6 +22,11 @@ class TaskList(list):
         self._typeCheck(item)
         super().append(item)
 
+    def extend(self, other_list):
+        for item in other_list:
+            self._typeCheck(item)
+            super().append(item)
+
     def _typeCheck(self, item):
         if not isinstance(item, Task):
             raise TypeError(f'Invalid {type(item)} cannot be added to TaskList')
