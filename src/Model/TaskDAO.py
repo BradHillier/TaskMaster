@@ -52,7 +52,7 @@ class TaskDAO:
             """, [task_list.ID])
 
             for task in res.fetchall():
-                task_list.tasks.append(self.serializer.deserialize(task))
+                task_list.append(self.serializer.deserialize(task))
 
     def update(self, task, **kwargs) -> Task:
         pass
