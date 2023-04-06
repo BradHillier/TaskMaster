@@ -21,6 +21,14 @@ class TaskDAO:
         """
         self.db = db_path
         self.serializer = TaskSerializer()
+        self.allowed_kwargs = [
+                'listID',
+                'username',
+                'taskName',
+                'description',
+                'dueDate',
+                'isCompleted',
+                'priority']
 
     def create(self, **kwargs) -> int:
         """Create a new Task
