@@ -23,6 +23,12 @@ class TaskMaster:
         if len(task_list) == 0:
             self.current_list.extend(self.task_dao.getTasks(task_list.ID))
 
+    def createTask(self, **kwargs):
+        task_id = self.task_dao.create(**kwargs)
+        if task_id != None:
+            new_task = self.task_dao.getTask(task_id)
+            self.current_list.append(new_task)
+
     def toggleTaskCompleted(self, task: Task):
         self.task_dao.update(task.ID, isCompleted = not task.isCompleted) 
 
@@ -31,6 +37,9 @@ class TaskMaster:
 
     def deleteTask(self, task: Task):
         self.task_dao.delete(task.ID)
+        for task_list in self.all_lists:
+            if task_list.ID == task.listID:
+                task_list.remove(task)
 
     def createList(self, name: str):
         list_id = self.task_list_dao.create(self.user.username, name)
@@ -46,8 +55,6 @@ class TaskMaster:
         self.task_list_dao.delete(task_list.ID)
         self.all_lists.remove(task_list)
 
-    def createTask(self, **kwargs):
-        self.task_dao.create(**kwargs)
 
     def login(self):
         pass
