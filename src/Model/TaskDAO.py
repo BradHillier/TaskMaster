@@ -54,7 +54,6 @@ class TaskDAO:
         ```
         """
         task_data = self.serializer.serialize(req_all=True, **kwargs) 
-        import pdb; pdb.set_trace()
         with sqlite3.connect(self.db) as conn:
             conn.row_factory = dict_factory
             cur = conn.cursor()
@@ -143,7 +142,7 @@ class TaskDAO:
         my_task_dao.update(my_task_id, **task_data)
         ```
 
-        WARNING
+        \u26A0 WARNING
         -------
         The SQL statement executed by this function is dynamically created. 
         All input from the user has been sanitized, but column names provided 
@@ -166,6 +165,7 @@ class TaskDAO:
             params = [value for value in kwargs.values()]
             params.append(task_id)
             cur.execute(sql, params) 
+            conn.commit()
 
     def delete(self, task_id: int):
         """Delete a Task
