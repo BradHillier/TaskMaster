@@ -19,6 +19,27 @@ class TaskView(customtkinter.CTkFrame):
     takes up the entire width of its master and padding * 2 vertical space
     '''
 
+    def __init__(self, master, name, **kwargs):
+        super().__init__(master, **kwargs)
+
+        self.padding = self.cget('height') / 2
+        self.grid_columnconfigure((1, 2), weight=1)
+
+        # The UI will automatically update if the value of any of the below
+        # StringVar's change
+        self.checkbox_status = tkinter.StringVar(value="off")
+        self.task_name = tkinter.StringVar(value=name)
+        self.date = tkinter.StringVar(value="3 Days Left")
+        self.priority = tkinter.StringVar(value="!!!")
+
+        self._create_checkbox()
+        self._create_task_name()
+        self._create_due_date()
+        self._create_priority()
+        self._create_buttons()
+
+
+
     def _create_buttons(self):
         edit_icon = "✎"
         trash_icon = "🗑"
@@ -54,25 +75,6 @@ class TaskView(customtkinter.CTkFrame):
     def trash_button_event(self):
         messagebox.showinfo("Info", "trash")
         pass
-
-    def __init__(self, master, name, **kwargs):
-        super().__init__(master, **kwargs)
-
-        self.padding = self.cget('height') / 2
-        self.grid_columnconfigure((1, 2), weight=1)
-
-        # The UI will automatically update if the value of any of the below
-        # StringVar's change
-        self.checkbox_status = tkinter.StringVar(value="off")
-        self.task_name = tkinter.StringVar(value=name)
-        self.date = tkinter.StringVar(value="3 Days Left")
-        self.priority = tkinter.StringVar(value="!!!")
-
-        self._create_checkbox()
-        self._create_task_name()
-        self._create_due_date()
-        self._create_priority()
-        self._create_buttons()
 
     def _create_checkbox(self):
         '''
@@ -120,7 +122,7 @@ class TaskView(customtkinter.CTkFrame):
                 row = 0, 
                 column = 2, 
                 # adds space between priority and due date
-                padx = self.padding * 2, 
+                padx = self.padding * 3, 
                 sticky = 'e')
 
     def _create_priority(self):
