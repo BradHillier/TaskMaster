@@ -4,6 +4,50 @@ from TaskScrollerView import TaskScrollerView
 from AddTask import AddTask
 from tkinter import messagebox
 
+
+class SortButton(customtkinter.CTkFrame):
+
+    def __init__(self, master, text, up_command, down_command, **kwargs):
+        super().__init__(master, **kwargs)
+
+        self.configure(fg_color='transparent')
+        self.label = self._createLabel(text)
+        self.label.grid(column=0, padx=(0, 10))
+
+        self.up_button = self._createUpButton(up_command)
+        self.up_button.grid(row=0, column=1)
+
+        self.down_button = self._createDownButton(down_command)
+        self.down_button.grid(row=0, column=2)
+
+    def _createLabel(self, text):
+        label = customtkinter.CTkLabel(
+                master=self,
+                text=text)
+        return label
+
+    def _createUpButton(self, command):
+        up_arrow = "\u25B2"
+        up_button = self._createbutton()
+        up_button.configure(text=up_arrow)
+        up_button.configure(command=command)
+        return up_button
+
+    def _createDownButton(self, command):
+        down_arrow = "\u25BC"
+        down_button = self._createbutton()
+        down_button.configure(text=down_arrow)
+        down_button.configure(command=command)
+        return down_button
+
+    def _createbutton(self):
+        return customtkinter.CTkButton(
+                master=self,
+                font=("Arial", 8),
+                width=2,
+                height=1)
+
+
 class ListContentView(customtkinter.CTkFrame):
     '''
     composed of the list's title and column headers above a scrolling
@@ -38,10 +82,6 @@ class ListContentView(customtkinter.CTkFrame):
         self.priority_header = tkinter.StringVar(value="Priority")
 
         self._createListTitle()
-        #control the width of each column
-        for i in range(8):
-                self.columnconfigure(i, weight=1)
-
         self._createHeader()
         self._createTaskList()
 
@@ -50,7 +90,7 @@ class ListContentView(customtkinter.CTkFrame):
     def _create_add_task_button(self):
         btn_plus = tkinter.StringVar(value="+")
         button = customtkinter.CTkButton(master=self, command=self.open_edit_task_page, textvariable=btn_plus, width=48, font=self.list_name_font, corner_radius=48)
-        button.grid(row=1, column=6, padx=18, pady=18, sticky='se')
+        button.grid(row=1, column=7, padx=18, pady=18, sticky='se')
 
     def _createListTitle(self):
         self.label = customtkinter.CTkLabel(self, 
@@ -64,70 +104,12 @@ class ListContentView(customtkinter.CTkFrame):
                     sticky="nsw")
 
     def _createHeader(self):
+        self.due_date = SortButton(self, 'dueDate', None, None)
+        self.due_date.grid(row=0, column=4, sticky='se')
 
-        # Create and position the due date header
-        self.due_label = customtkinter.CTkLabel(
-                master=self,
-                textvariable=self.due_header
-        )
-        self.due_label.grid(row=0, column=2, padx=(40, 40), sticky="e")
+        self.priority = SortButton(self, 'priority', None, None)
+        self.priority.grid(row=0, column=5, padx=(30, 100), sticky='se')
 
-        # Create and position the priority header
-        self.priority_label = customtkinter.CTkLabel(
-                master=self,
-                textvariable=self.priority_header
-        )
-        self.priority_label.grid(row=0, column=4, padx=(40, 40), sticky="e")
-
-        # Create the up arrow button for due date
-        up_arrow = "\u25B2"
-        self.due_up_button = customtkinter.CTkButton(
-                master=self,
-                text=up_arrow,
-                command=self.show_ascending_message,
-                font=("Arial", 8),
-                width=2,
-                height=1
-        )
-        self.due_up_button.grid(row=0, column=3, padx=(30, 20), sticky="e")
-
-        # Create the down arrow button for due date
-        down_arrow = "\u25BC"
-        self.due_down_button = customtkinter.CTkButton(
-                master=self,
-                text=down_arrow,
-                command=self.show_descending_message,
-                font=("Arial", 8),
-                width=2,
-                height=1
-        )
-        self.due_down_button.grid(row=0, column=3, padx=(40, 10), sticky="e")
-
-        # Create the up arrow button for priority
-        self.priority_up_button = customtkinter.CTkButton(
-                master=self,
-                text=up_arrow,
-                command=self.show_ascending_message,
-                font=("Arial", 8),
-                width=2,
-                height=1
-        )
-        self.priority_up_button.grid(row=0, column=5, padx=(30, 20), sticky="e")
-
-        # Create the down arrow button for priority
-        self.priority_down_button = customtkinter.CTkButton(
-                master=self,
-                text=down_arrow,
-                command=self.show_descending_message,
-                font=("Arial", 8),
-                width=2,
-                height=1
-        )
-        self.priority_down_button.grid(row=0, column=5, padx=(40, 10), sticky="e")
-
-        # Configure column span for the due date and priority headers
-        self.due_label.grid(columnspan=2)
-        self.priority_label.grid(columnspan=2)
 
     def _createTaskList(self):
         self.task_scroller = TaskScrollerView(
