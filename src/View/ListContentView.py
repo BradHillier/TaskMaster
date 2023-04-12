@@ -2,6 +2,51 @@ import tkinter
 import customtkinter
 from TaskScrollerView import TaskScrollerView
 from AddTask import AddTask
+from tkinter import messagebox
+
+
+class SortButton(customtkinter.CTkFrame):
+
+    def __init__(self, master, text, up_command, down_command, **kwargs):
+        super().__init__(master, **kwargs)
+
+        self.configure(fg_color='transparent')
+        self.label = self._createLabel(text)
+        self.label.grid(column=0, padx=(0, 10))
+
+        self.up_button = self._createUpButton(up_command)
+        self.up_button.grid(row=0, column=1)
+
+        self.down_button = self._createDownButton(down_command)
+        self.down_button.grid(row=0, column=2)
+
+    def _createLabel(self, text):
+        label = customtkinter.CTkLabel(
+                master=self,
+                text=text)
+        return label
+
+    def _createUpButton(self, command):
+        up_arrow = "\u25B2"
+        up_button = self._createbutton()
+        up_button.configure(text=up_arrow)
+        up_button.configure(command=command)
+        return up_button
+
+    def _createDownButton(self, command):
+        down_arrow = "\u25BC"
+        down_button = self._createbutton()
+        down_button.configure(text=down_arrow)
+        down_button.configure(command=command)
+        return down_button
+
+    def _createbutton(self):
+        return customtkinter.CTkButton(
+                master=self,
+                font=("Arial", 8),
+                width=2,
+                height=1)
+
 
 class ListContentView(customtkinter.CTkFrame):
     '''
@@ -59,26 +104,12 @@ class ListContentView(customtkinter.CTkFrame):
                     sticky="nsw")
 
     def _createHeader(self):
+        self.due_date = SortButton(self, 'dueDate', None, None)
+        self.due_date.grid(row=0, column=4, sticky='se')
 
-        # Create and position the due date header
-        self.label = customtkinter.CTkLabel(
-                master = self,
-                textvariable = self.due_header)
-        self.label.grid(
-                row = 0,
-                column = 2,
-                padx = (0, self.task_height + 20),
-                sticky = "se")
+        self.priority = SortButton(self, 'priority', None, None)
+        self.priority.grid(row=0, column=5, padx=(30, 100), sticky='se')
 
-        # Create and position the priority header
-        self.label = customtkinter.CTkLabel(
-                master = self,
-                textvariable = self.priority_header)
-        self.label.grid(
-                row = 0,
-                column = 3,
-                padx = (0, self.margin + self.task_height / 2),
-                sticky = "se")
 
     def _createTaskList(self):
         self.task_scroller = TaskScrollerView(
@@ -89,7 +120,7 @@ class ListContentView(customtkinter.CTkFrame):
         self.task_scroller.grid(
                 row=1,
                 column=0,
-                columnspan=4, # use the entirety of the grids horizontal space
+                columnspan=8, # use the entirety of the grids horizontal space
                 sticky='nsew')
 
     def open_edit_task_page(self):
@@ -98,3 +129,9 @@ class ListContentView(customtkinter.CTkFrame):
         new_task_page = AddTask(new_task_window, fg_color='transparent')
         new_task_page.pack(expand=True, fill='both')
         return new_task_page
+
+    def show_ascending_message(self):
+        messagebox.showinfo("Info", "Ascending")
+
+    def show_descending_message(self):
+        messagebox.showinfo("Info", "Descending")

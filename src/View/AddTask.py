@@ -1,5 +1,6 @@
 import tkinter
 import customtkinter as ctk
+import emoji
 from tkinter import messagebox
 
 # from tkinter import *
@@ -58,8 +59,10 @@ class AddTask(ctk.CTkFrame):
         self.priority_label = ctk.CTkLabel(self, text="Priority:")
         self.priority_label.grid(row=5, column=3, padx=10, pady=5)
 
+        emoji_names = (':green_circle:', ':yellow_circle:', ':red_circle:')
         # Priority Combo
-        self.priority_combobox = ctk.CTkComboBox(master=self, values=["Low", "Medium", "High"], state="readonly")
+        priority_emojis = [emoji.emojize(f'{priority}') for priority in emoji_names]
+        self.priority_combobox = ctk.CTkComboBox(master=self, values=priority_emojis)
         self.priority_combobox.grid(row=6, column=3, padx=20, pady=20, sticky="ew")
 
         # Create Task button
@@ -69,10 +72,11 @@ class AddTask(ctk.CTkFrame):
 
     # TODO in the future will need to process / pass this data to the db and create a task object
     def submit_task(self):
+        
         task_name = self.task_name_entry.get()
         task_desc = self.task_desc_text.get("1.0", "end-1c")
         due_date = self.due_date_picker.get_date()
-        priority = self.priority_combobox.get()
+        priority = emoji.demojize(self.priority_combobox.get())
 
         if not task_name:
             messagebox.showerror("Task Name", "Please enter a task name")
@@ -89,3 +93,4 @@ class AddTask(ctk.CTkFrame):
                                                       Date: {due_date} \n \
                                                       Priority: {priority}" \
                                                       )
+            self.master.destroy()

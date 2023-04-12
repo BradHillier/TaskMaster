@@ -1,6 +1,9 @@
-import tkinter 
+import tkinter
 import customtkinter
 from datetime import date, timedelta
+from tkinter import ttk
+from tkinter import messagebox
+import emoji
 
 # this code heavily relies on tkinters grid positioning system
 # this system allows easy specification of how widgets move around when the 
@@ -38,12 +41,52 @@ class TaskView(customtkinter.CTkFrame):
         else:
             due_str = f'{days_till_due} days left'
         self.date = tkinter.StringVar(value=due_str)
-        self.priority = tkinter.StringVar(value=priority)
+        priority_emoji = emoji.emojize(f'{priority}')
+        self.priority = tkinter.StringVar(value=priority_emoji)
 
         self._create_checkbox()
         self._create_task_name()
         self._create_due_date()
         self._create_priority()
+        self._create_buttons()
+
+
+
+    def _create_buttons(self):
+        edit_icon = "✎"
+        trash_icon = "🗑"
+
+        # Set the font for the icons
+        #icon_font = Font(size=24)
+
+        style = ttk.Style()
+        style.configure('Icon.TButton', padding=(2, 0))
+
+        edit_button = customtkinter.CTkButton(
+                master=self,
+                text=edit_icon,
+                command=self.edit_button_event,
+                font=('Arial', 24),
+                width=5
+        )
+        edit_button.grid(row=0, column=5, padx=(5), sticky="w")
+
+        trash_button = customtkinter.CTkButton(
+                master=self,
+                text=trash_icon,
+                command=self.trash_button_event,
+                font=('Arial', 24),
+                width=5
+        )
+        trash_button.grid(row=0, column=5, padx=(50,5), sticky="e")
+
+    def edit_button_event(self):
+        messagebox.showinfo("Info", "edit")
+        pass
+
+    def trash_button_event(self):
+        messagebox.showinfo("Info", "trash")
+        pass
 
     def _create_checkbox(self):
         '''
@@ -91,7 +134,7 @@ class TaskView(customtkinter.CTkFrame):
                 row = 0, 
                 column = 2, 
                 # adds space between priority and due date
-                padx = self.padding * 2, 
+                padx = self.padding * 3, 
                 sticky = 'e')
 
     def _create_priority(self):
