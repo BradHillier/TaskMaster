@@ -24,7 +24,7 @@ class TaskView(customtkinter.CTkFrame):
         super().__init__(master, **kwargs)
 
         self.padding = self.cget('height') / 2
-        self.grid_columnconfigure((1, 2), weight=1)
+        self.grid_columnconfigure(1, weight=1)
 
         # The UI will automatically update if the value of any of the below
         # StringVar's change

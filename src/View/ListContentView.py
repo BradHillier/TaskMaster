@@ -90,7 +90,7 @@ class ListContentView(customtkinter.CTkFrame):
     def _create_add_task_button(self):
         btn_plus = tkinter.StringVar(value="+")
         self.plus_button = customtkinter.CTkButton(master=self, textvariable=btn_plus, width=48, font=self.list_name_font, corner_radius=48)
-        self.plus_button.grid(row=1, column=3, padx=18, pady=18, sticky='se')
+        self.plus_button.grid(row=1, column=5, padx=18, pady=18, sticky='se')
 
     def _createListTitle(self):
         self.label = customtkinter.CTkLabel(self, 
