@@ -1,3 +1,4 @@
+import copy
 from TaskDAO import TaskDAO
 from TaskListDAO import TaskListDAO
 
@@ -17,6 +18,9 @@ class TaskMaster:
 
         self.all_lists: list[TaskList] = self.task_list_dao.getAll(self.user.username)
         self.current_list: TaskList = self.all_lists[0]
+
+    def getCurrentList():
+        copy.deepycopy(self.current_list)
 
     def changeList(self, task_list: TaskList):
         self.current_list = task_list
