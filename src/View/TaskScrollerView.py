@@ -7,40 +7,27 @@ class TaskScrollerView(customtkinter.CTkScrollableFrame):
     def __init__(self, master, margin=20, task_size=40, **kwargs):
         super().__init__(master, **kwargs)
         self.grid_columnconfigure(0, weight=1)
+        self.distance_between_tasks = 11
+        self.task_size = task_size
+        self.margin = margin
+        self.task_views = []
 
-        distance_between_tasks = 10
+    def showTasks(self, task_list: list):
 
-        tasks = [
-            'Washing bedding',
-            'Taking out the trash',
-            'Wash the car',
-            'Washing windows',
-            'Bathing pets',
-            'Clean refrigerator',
-            'Change air filters on a furnace or air conditioner',
-            'Dry and put away dishes',
-            'Put groceries away',
-            'Organize pantry',
-            'Make the bed',
-            'Put books away on shelves',
-            'Hang and fold clean clothes',
-            'Wipe out bathroom cupboard',
-            'Prepare snacks',
-            'Prepare simple meal',
-            'Water outdoor plants',
-            'Weed garden',
-            'Hose off patio',
-            'Change light bulbs']
-
-        for i, task in enumerate(tasks):
-            self.my_frame = TaskView(
+        for i, task in enumerate(task_list):
+            task = TaskView(
                     master=self, 
-                    name=task,
-                    height=task_size)
-            self.my_frame.grid(
+                    ID=task.ID,
+                    name=task.name,
+                    date=task.dueDate,
+                    priority=task.priority,
+                    isCompleted=task.isCompleted,
+                    height=self.task_size)
+            task.grid(
                     row = i, 
                     column = 0, 
-                    padx = margin,
-                    pady = distance_between_tasks,
+                    padx = self.margin,
+                    pady = self.distance_between_tasks,
                     sticky='ew')
+            self.task_views.append(task)
 

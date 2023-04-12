@@ -6,9 +6,13 @@ from ListContentView import ListContentView
 from SidebarView import SideBar
 from TopbarView import TopBar
 from Login import LoginPage
+import sys
+
+sys.path.insert(1, '../Model')
+from TaskMaster import TaskMaster
 
 
-class TaskMaster(customtkinter.CTkFrame):
+class TaskThing(customtkinter.CTkFrame):
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
 
@@ -30,6 +34,10 @@ class TaskMaster(customtkinter.CTkFrame):
         # a scrollable collection of tasks
         self.list_view_frame = ListContentView(master=self, fg_color="transparent")
         self.list_view_frame.grid(row=1, column=1, pady=(40, 0), sticky="nsew");
+        
+        myTM = TaskMaster()
+        myTM.changeList(myTM.all_lists[0])
+        self.list_view_frame.task_scroller.showTasks(myTM.current_list)
 
 
 class App(customtkinter.CTk):
@@ -49,7 +57,7 @@ class App(customtkinter.CTk):
         # when the login page is hidden, show the main view
         self.login.bind('<Unmap>', self.show_main_view)
 
-        self.task_master = TaskMaster(self, fg_color='transparent')
+        self.task_master = TaskThing(self, fg_color='transparent')
         self.task_master.bind('<Unmap>', self.show_login_view)
 
         # allows task list buttons text entry to hide when clicking outside it

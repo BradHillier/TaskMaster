@@ -1,5 +1,6 @@
 import tkinter 
 import customtkinter
+from datetime import date
 
 # this code heavily relies on tkinters grid positioning system
 # this system allows easy specification of how widgets move around when the 
@@ -16,7 +17,7 @@ class TaskView(customtkinter.CTkFrame):
     takes up the entire width of its master and padding * 2 vertical space
     '''
 
-    def __init__(self, master, name, **kwargs):
+    def __init__(self, master, ID: int, name: str, date: date, priority: str, isCompleted: bool , **kwargs):
         super().__init__(master, **kwargs)
 
         self.padding = self.cget('height') / 2
