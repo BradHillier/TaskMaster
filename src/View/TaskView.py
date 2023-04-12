@@ -1,6 +1,6 @@
 import tkinter 
 import customtkinter
-from datetime import date
+from datetime import date, timedelta
 
 # this code heavily relies on tkinters grid positioning system
 # this system allows easy specification of how widgets move around when the 
@@ -25,10 +25,20 @@ class TaskView(customtkinter.CTkFrame):
 
         # The UI will automatically update if the value of any of the below
         # StringVar's change
-        self.checkbox_status = tkinter.StringVar(value="off")
+        if isCompleted:
+            self.checkbox_status = tkinter.StringVar(value="on")
+        else:
+            self.checkbox_status = tkinter.StringVar(value="off")
+
         self.task_name = tkinter.StringVar(value=name)
-        self.date = tkinter.StringVar(value="3 Days Left")
-        self.priority = tkinter.StringVar(value="!!!")
+
+        days_till_due = (date - date.today()).days
+        if days_till_due < 0:
+            due_str = f'{abs(days_till_due)} days ago'
+        else:
+            due_str = f'{days_till_due} days left'
+        self.date = tkinter.StringVar(value=due_str)
+        self.priority = tkinter.StringVar(value=priority)
 
         self._create_checkbox()
         self._create_task_name()

@@ -83,9 +83,9 @@ class AddTask(ctk.CTkFrame):
         elif not priority:
             messagebox.showerror("Task", "No priority")
         else:
+            return (task_name, task_desc, due_date, priority)
             messagebox.showinfo("New Task Details", f"Name: {task_name}\n \
                                                       Desc: {task_desc}\n \
                                                       Date: {due_date} \n \
                                                       Priority: {priority}" \
                                                       )
-            self.master.destroy()

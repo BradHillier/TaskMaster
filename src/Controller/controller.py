@@ -1,12 +1,15 @@
 import sys
+import dateparser
+from functools import partial
 
 sys.path.insert(1, '../Model')
-sys.path.insert(1, '../View')
 from TaskMaster import TaskMaster
-from TaskMasterView import App
-from TaskView import TaskView
 from Task import Task
-from functools import partial
+
+sys.path.insert(1, '../View')
+from TaskView import TaskView
+from TaskMasterView import App
+from AddTask import AddTask
 
 
 class Controller:
@@ -16,6 +19,7 @@ class Controller:
         self.view = App()
         self.switchTaskList(0)
     
+        # add event bindings for renaming and selecting a task list
         for task_list in self.model.all_lists:
             sidebar = self.view.task_master.side_bar
             sidebar.add_task_list(task_list.name)
@@ -28,6 +32,11 @@ class Controller:
                     '<Button-1>', partial(self.switchTaskList, list_idx))
             new_list_entry.bind(
                     '<Return>', partial(self.renameTaskList, list_idx))
+
+        add_task_btn = self.view.task_master.list_view_frame.plus_button
+        add_task_btn.bind( '<Button-1>', self.createTaskInput)
+
+
             
         # This has to be the last thing in __init__
         self.view.mainloop() 
@@ -44,7 +53,7 @@ class Controller:
                 master = list_content.task_scroller,
                 ID = task.ID,
                 name = task.name,
-                date = task.dueDate,
+                date = dateparser.parse(task.dueDate),
                 priority = task.priority,
                 isCompleted = task.isCompleted,
                 height = 40)
@@ -80,6 +89,25 @@ class Controller:
         if self.model.all_lists[list_index] == self.model.current_list:
             list_view = self.view.task_master.list_view_frame
             list_view.list_name.set(self.model.current_list.name)
+
+    def createTaskInput(self, event):
+        edit_window = self.view.task_master.list_view_frame.open_edit_task_page()
+        edit_window.button.bind(
+                '<Button-1>', partial(self.processTaskInputs, edit_window))
+
+    def processTaskInputs(self, widget, event):
+        keywords = {
+                'listID':  self.model.current_list.ID,
+                'username': self.model.user.username,
+                'taskName':  widget.task_name_entry.get(),
+                'description': widget.task_desc_text.get("1.0", "end-1c"),
+                'dueDate': dateparser.parse(widget.due_date_picker.get_date()),
+                'isCompleted': False,
+                'priority': widget.priority_combobox.get()
+            }
+        self.model.createTask(**keywords)
+        self.retreiveTaskView(self.model.current_list[-1])
+        widget.master.destroy()
 
 if __name__ == '__main__':
     myContrller = Controller()
