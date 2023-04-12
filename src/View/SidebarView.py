@@ -171,16 +171,6 @@ class SideBar(customtkinter.CTkFrame):
 
         self.make_create_list_button()
 
-        # Create task list buttons for each title
-        task_list_titles = ['inbox', 'today', 'upcoming', 'all']
-        for title in task_list_titles:
-            self.task_lists.append(
-                    TaskListNavButton(self, title, fg_color='transparent'))
-
-        # Place the task list buttons within the side bar in current order
-        for idx, task_list in enumerate(self.task_lists):
-            task_list.grid(row=self.grid_size()[1], column=0)
-
     def make_create_list_button(self) -> customtkinter.CTkButton:
         ''' 
         A button for creating a new task list. When clicked, an entry
@@ -206,6 +196,10 @@ class SideBar(customtkinter.CTkFrame):
         widget.configure(state='disabled', bg_color='transparent', text_color='#1F6AA5')
         self.selected = widget
 
-    def add_task_list(self):
-        new_task_list = TaskListNavButton(self, fg_color='transparent')
+    def add_task_list(self, name=None):
+        if name:
+            new_task_list = TaskListNavButton(self,name, fg_color='transparent')
+        else:
+            new_task_list = TaskListNavButton(self, fg_color='transparent')
         new_task_list.grid(row=self.grid_size()[1], column=0)
+        self.task_lists.append(new_task_list)
