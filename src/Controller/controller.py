@@ -19,12 +19,15 @@ class Controller:
         for task_list in self.model.all_lists:
             sidebar = self.view.task_master.side_bar
             sidebar.add_task_list(task_list.name)
+            list_idx = len(sidebar.task_lists) - 1
 
             # switch the task list view when clicking on the newly created list
             new_list_button = sidebar.task_lists[-1].button
+            new_list_entry = sidebar.task_lists[-1].entry
             new_list_button.bind(
-                    '<Button-1>', 
-                    partial(self.switchTaskList, len(sidebar.task_lists) -1))
+                    '<Button-1>', partial(self.switchTaskList, list_idx))
+            new_list_entry.bind(
+                    '<Return>', partial(self.renameTaskList, list_idx))
             
         # This has to be the last thing in __init__
         self.view.mainloop() 
@@ -69,6 +72,14 @@ class Controller:
         # set the list view heading name to the new list's name
         list_view.list_name.set(self.model.current_list.name)
 
+    def renameTaskList(self, list_index: int, event=None): 
+        name = self.view.task_master.side_bar.task_lists[list_index].button.cget('text')
+        self.model.renameList(self.model.all_lists[list_index], name)
+
+        # update the list view header if the renamed list is the selected list
+        if self.model.all_lists[list_index] == self.model.current_list:
+            list_view = self.view.task_master.list_view_frame
+            list_view.list_name.set(self.model.current_list.name)
 
 if __name__ == '__main__':
     myContrller = Controller()
