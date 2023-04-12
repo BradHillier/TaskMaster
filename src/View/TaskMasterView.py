@@ -34,10 +34,6 @@ class TaskThing(customtkinter.CTkFrame):
         # a scrollable collection of tasks
         self.list_view_frame = ListContentView(master=self, fg_color="transparent")
         self.list_view_frame.grid(row=1, column=1, pady=(40, 0), sticky="nsew");
-        
-        myTM = TaskMaster()
-        myTM.changeList(myTM.all_lists[0])
-        self.list_view_frame.task_scroller.showTasks(myTM.current_list)
 
 
 class App(customtkinter.CTk):
