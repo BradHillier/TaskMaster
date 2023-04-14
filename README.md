@@ -13,7 +13,7 @@ Overall, this application aims to simplify the task management process and help 
 ## Read the Docs
 Documentation for the project has been generated using [pdoc](https://pdoc3.github.io/pdoc/)
 
-and can be viewed by opening `./docs/src.html`
+and can be viewed [here](https://raw.githack.com/BradHillier/TaskMaster/main/docs/src.html) or by opening `./docs/src.html` 
 
 Currently, not all files have documentation, though the following files are fully or partially documented:
 
