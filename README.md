@@ -63,8 +63,8 @@ If `setup.sh` is run without using `source`, all the dependencies will be instal
 
 In it's current state, the login credentials are hard coded and registering new accounts has not been implemented. To access the app, input the following
 
-**username:** Admin
-**password:** password
+**username:** Admin     
+**password:** password    
 
 ## Support
 For help running the application or troubleshooting issues, please send an email to [waking_clocks_0r@icloud.com](mailto:waking_clocks_0r@icloud.com)
@@ -72,9 +72,9 @@ For help running the application or troubleshooting issues, please send an email
 ## Authors and acknowledgment
 This project was created as part of **CSCI 331 - Object Oriented Programming** at Vancouver Island University by:
 
-**B**randon Cosh
-**R**ishabh Sharma
-**B**rad Hillier
+**B**randon Cosh      
+**R**ishabh Sharma     
+**B**rad Hillier     
 
 
 ## Project status
