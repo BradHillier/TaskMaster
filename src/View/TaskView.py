@@ -62,14 +62,14 @@ class TaskView(customtkinter.CTkFrame):
         style = ttk.Style()
         style.configure('Icon.TButton', padding=(2, 0))
 
-        edit_button = customtkinter.CTkButton(
+        self.edit_button = customtkinter.CTkButton(
                 master=self,
                 text=edit_icon,
                 command=self.edit_button_event,
                 font=('Arial', 24),
                 width=5
         )
-        edit_button.grid(row=0, column=5, padx=(5), sticky="w")
+        self.edit_button.grid(row=0, column=5, padx=(5), sticky="w")
 
         self.trash_button = customtkinter.CTkButton(
                 master=self,

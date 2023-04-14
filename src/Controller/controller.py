@@ -1,6 +1,8 @@
 import sys
 import dateparser
+import datetime
 from functools import partial
+from tkcalendar import Calendar
 
 from src.Model.TaskMaster import TaskMaster
 from src.Model.Task import Task
@@ -73,6 +75,9 @@ class Controller:
                 '<Button-1>', partial(self.deleteTask, task, task_view))
         list_content.task_scroller.task_views.append(task_view)
 
+        task_view.edit_button.bind(
+                '<Button-1>', partial(self.editTask, task=task))
+
     def switchTaskList(self, list_index: int, event=None):
         list_view = self.view.task_master.list_view_frame
 
@@ -96,10 +101,41 @@ class Controller:
             list_view = self.view.task_master.list_view_frame
             list_view.list_name.set(self.model.current_list.name)
 
-    def createTaskInput(self, event):
+    def editTask(self, event, task):
+        print(task)
+        existing_task_window = self.createTaskInput(event)
+        existing_task_window.master.title("EDIT: " + task.name)
+        existing_task_window.task_name_entry.insert(0, task.name)
+        existing_task_window.task_desc_text.insert("1.0", task.description or "")
+        
+        due_date = datetime.datetime.strptime(task.dueDate, '%Y-%m-%d').date()
+        existing_task_window.due_date_picker.selection_set(due_date)
+        
+        existing_task_window.button.unbind('<Button-1>')
+        existing_task_window.button.bind(
+            '<Button-1>', partial(self.processUpdateTask, existing_task_window, task))
+
+    def processUpdateTask(self, widget, task, event):
+        keywords = {
+            'listID':  self.model.current_list.ID,
+            'username': self.model.user.username,
+            'taskName':  widget.task_name_entry.get(),
+            'description': widget.task_desc_text.get("1.0", "end-1c"),
+            'dueDate': dateparser.parse(widget.due_date_picker.get_date()),
+            'isCompleted': task.isCompleted,
+            'priority': widget.priority_combobox.get()
+        }
+        for k,v in keywords.items():
+            print(f"{k} : {v}")
+        self.model.updateTask(task, **keywords)
+        self.retreiveTaskView(self.model.current_list[-1])
+        widget.master.destroy()
+
+    def createTaskInput(self, event) -> AddTask:
         edit_window = self.view.task_master.list_view_frame.open_edit_task_page()
         edit_window.button.bind(
                 '<Button-1>', partial(self.processTaskInputs, edit_window))
+        return edit_window
 
     def processTaskInputs(self, widget, event):
         keywords = {
