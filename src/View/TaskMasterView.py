@@ -10,7 +10,7 @@ from src.View.Login import LoginPage
 from src.Model.TaskMaster import TaskMaster
 
 
-class TaskThing(customtkinter.CTkFrame):
+class TaskMasterView(customtkinter.CTkFrame):
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
 
@@ -51,7 +51,7 @@ class App(customtkinter.CTk):
         # when the login page is hidden, show the main view
         self.login.bind('<Unmap>', self.show_main_view)
 
-        self.task_master = TaskThing(self, fg_color='transparent')
+        self.task_master = TaskMasterView(self, fg_color='transparent')
         self.task_master.bind('<Unmap>', self.show_login_view)
 
         # allows task list buttons text entry to hide when clicking outside it
