@@ -1,7 +1,7 @@
 import tkinter
 import customtkinter
-from TaskScrollerView import TaskScrollerView
-from AddTask import AddTask
+from src.View.TaskScrollerView import TaskScrollerView
+from src.View.AddTask import AddTask
 from tkinter import messagebox
 
 
@@ -108,7 +108,7 @@ class ListContentView(customtkinter.CTkFrame):
         self.due_date.grid(row=0, column=4, sticky='se')
 
         self.priority = SortButton(self, 'priority', None, None)
-        self.priority.grid(row=0, column=5, padx=(30, 100), sticky='se')
+        self.priority.grid(row=0, column=5, padx=(30, 200), sticky='se')
 
 
     def _createTaskList(self):

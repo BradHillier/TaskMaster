@@ -1,16 +1,16 @@
 import copy
-from TaskDAO import TaskDAO
-from TaskListDAO import TaskListDAO
+from src.Model.TaskDAO import TaskDAO
+from src.Model.TaskListDAO import TaskListDAO
 
-from User import User
-from Task import Task
-from TaskList import TaskList
+from src.Model.User import User
+from src.Model.Task import Task
+from src.Model.TaskList import TaskList
 
 class TaskMaster:
 
     def __init__(self):
         self.user = User(username='test_user', email='user@example.com')
-        self.database = '../../database.sqlite3'
+        self.database = 'database.sqlite3'
 
         # data access objects
         self.task_dao = TaskDAO(self.database)
@@ -35,6 +35,7 @@ class TaskMaster:
 
     def toggleTaskCompleted(self, task: Task):
         self.task_dao.update(task.ID, isCompleted = not task.isCompleted) 
+        task.isCompleted = not task.isCompleted
 
     def updateTask(self, task: Task, **kwargs):
         self.task_dao.update(task.ID, **kwargs)

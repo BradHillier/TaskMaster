@@ -1,4 +1,4 @@
-from Task import Task
+from src.Model.Task import Task
 import dateparser
 
 

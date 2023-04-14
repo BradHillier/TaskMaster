@@ -1,5 +1,5 @@
 import customtkinter
-from TaskView import TaskView
+from src.View.TaskView import TaskView
 
 
 class TaskScrollerView(customtkinter.CTkScrollableFrame):

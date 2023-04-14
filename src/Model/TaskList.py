@@ -1,5 +1,5 @@
-from User import User
-from Task import Task
+from src.Model.User import User
+from src.Model.Task import Task
 
 
 class TaskList(list):

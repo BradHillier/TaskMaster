@@ -71,14 +71,13 @@ class TaskView(customtkinter.CTkFrame):
         )
         edit_button.grid(row=0, column=5, padx=(5), sticky="w")
 
-        trash_button = customtkinter.CTkButton(
+        self.trash_button = customtkinter.CTkButton(
                 master=self,
                 text=trash_icon,
-                command=self.trash_button_event,
                 font=('Arial', 24),
                 width=5
         )
-        trash_button.grid(row=0, column=5, padx=(50,5), sticky="e")
+        self.trash_button.grid(row=0, column=5, padx=(50,5), sticky="e")
 
     def edit_button_event(self):
         messagebox.showinfo("Info", "edit")
@@ -99,7 +98,7 @@ class TaskView(customtkinter.CTkFrame):
         method will be triggered. 
         '''
         # create a check box widget
-        checkbox = customtkinter.CTkCheckBox(
+        self.checkbox = customtkinter.CTkCheckBox(
                 master = self,
                 # text was intentionally left empty to allow better control of
                 # the position of the task name using a label widget. If this
@@ -110,7 +109,7 @@ class TaskView(customtkinter.CTkFrame):
                 onvalue = 'on', offvalue = 'off')
 
         # place the newly created widget in the tasks grid
-        checkbox.grid(
+        self.checkbox.grid(
                 row = 0, 
                 column = 0, 
                 padx = self.padding,          # add space between left edge of task and checkbox
@@ -130,6 +129,8 @@ class TaskView(customtkinter.CTkFrame):
         date_label = customtkinter.CTkLabel(
                 master = self, 
                 textvariable = self.date)
+        if 'ago' in self.date.get():
+            date_label.configure(text_color='red')
         date_label.grid(
                 row = 0, 
                 column = 2, 

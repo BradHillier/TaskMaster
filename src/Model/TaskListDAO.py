@@ -1,5 +1,5 @@
 import sqlite3
-from TaskListSerializer import TaskListSerializer
+from src.Model.TaskListSerializer import TaskListSerializer
 
 
 def dict_factory(cursor, row):

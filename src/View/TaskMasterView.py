@@ -2,14 +2,12 @@
 
 import tkinter 
 import customtkinter
-from ListContentView import ListContentView
-from SidebarView import SideBar
-from TopbarView import TopBar
-from Login import LoginPage
-import sys
 
-sys.path.insert(1, '../Model')
-from TaskMaster import TaskMaster
+from src.View.ListContentView import ListContentView
+from src.View.SidebarView import SideBar
+from src.View.TopbarView import TopBar
+from src.View.Login import LoginPage
+from src.Model.TaskMaster import TaskMaster
 
 
 class TaskThing(customtkinter.CTkFrame):

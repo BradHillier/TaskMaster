@@ -15,7 +15,7 @@ class TopBar(customtkinter.CTkFrame):
         self.label.grid(row=0, column=0,  padx=60, pady=20, sticky="nsw")
 
         # Welcome Message
-        self.welcome_message = tkinter.StringVar(value="Welcome <User Name>")
+        self.welcome_message = tkinter.StringVar(value="Welcome Admin")
         self.welcome_label = customtkinter.CTkLabel(master=self, textvariable=self.welcome_message)
         self.welcome_label.grid(row=0, column=2,  padx=60, pady=20, sticky="nse")
 

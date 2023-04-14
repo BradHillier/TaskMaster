@@ -2,14 +2,12 @@ import sys
 import dateparser
 from functools import partial
 
-sys.path.insert(1, '../Model')
-from TaskMaster import TaskMaster
-from Task import Task
+from src.Model.TaskMaster import TaskMaster
+from src.Model.Task import Task
 
-sys.path.insert(1, '../View')
-from TaskView import TaskView
-from TaskMasterView import App
-from AddTask import AddTask
+from src.View.TaskView import TaskView
+from src.View.TaskMasterView import App
+from src.View.AddTask import AddTask
 
 
 class Controller:
@@ -20,8 +18,8 @@ class Controller:
         self.switchTaskList(0)
     
         # add event bindings for renaming and selecting a task list
+        sidebar = self.view.task_master.side_bar
         for task_list in self.model.all_lists:
-            sidebar = self.view.task_master.side_bar
             sidebar.add_task_list(task_list.name)
             list_idx = len(sidebar.task_lists) - 1
 
@@ -32,6 +30,10 @@ class Controller:
                     '<Button-1>', partial(self.switchTaskList, list_idx))
             new_list_entry.bind(
                     '<Return>', partial(self.renameTaskList, list_idx))
+
+        sidebar.select_list(sidebar.task_lists[0].button)
+
+        
 
         add_task_btn = self.view.task_master.list_view_frame.plus_button
         add_task_btn.bind( '<Button-1>', self.createTaskInput)
@@ -49,7 +51,7 @@ class Controller:
         list_content = self.view.task_master.list_view_frame
 
         # Create a TaskView from the provided Task model
-        task = TaskView(
+        task_view = TaskView(
                 master = list_content.task_scroller,
                 ID = task.ID,
                 name = task.name,
@@ -59,13 +61,17 @@ class Controller:
                 height = 40)
 
         # Place the task in the list content view's task scroller
-        task.grid(
+        task_view.grid(
                 row = len(list_content.task_scroller.task_views), 
                 column = 0, 
                 padx = list_content.margin,
                 pady = 11,
                 sticky='ew')
-        list_content.task_scroller.task_views.append(task)
+        task_view.checkbox.bind(
+                '<Button-1>', partial(self.toggleTask, task))
+        task_view.trash_button.bind(
+                '<Button-1>', partial(self.deleteTask, task, task_view))
+        list_content.task_scroller.task_views.append(task_view)
 
     def switchTaskList(self, list_index: int, event=None):
         list_view = self.view.task_master.list_view_frame
@@ -108,6 +114,14 @@ class Controller:
         self.model.createTask(**keywords)
         self.retreiveTaskView(self.model.current_list[-1])
         widget.master.destroy()
+
+    def toggleTask(self, task, event):
+        self.model.toggleTaskCompleted(task)
+
+    def deleteTask(self, task, task_view, event):
+        self.model.deleteTask(task)
+        task_view.destroy()
+
 
 if __name__ == '__main__':
     myContrller = Controller()

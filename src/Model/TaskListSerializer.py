@@ -1,4 +1,4 @@
-from TaskList import TaskList
+from src.Model.TaskList import TaskList
 
 class TaskListSerializer:
 
