@@ -76,7 +76,7 @@ class TaskDAO:
                     isCompleted, 
                     priority)
                 VALUES (?, ?, ?, ?, ?, ?, ?)
-            """, task_data)
+            """, list(task_data.values()))
             conn.commit()
             return cur.lastrowid
 
