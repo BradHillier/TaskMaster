@@ -158,6 +158,7 @@ class TaskDAO:
         checked against a list of allowed keywords, but this still opens a 
         potential security risk.
         """
+        kwargs = self.serializer.serialize(**kwargs)
         with sqlite3.connect(self.db) as conn:
             cur = conn.cursor()
 
