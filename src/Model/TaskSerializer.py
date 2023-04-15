@@ -27,10 +27,9 @@ class TaskSerializer:
                 raise KeyError(f'Missing required keywords {missing_keys}')
 
         if 'dueDate' in kwargs:
-            kwargs['dueDate'] = kwargs['dueDate'].isoformat()
+            kwargs['dueDate'] = kwargs['dueDate'].strftime("%Y-%m-%d")
 
-        # ensure values appear in the expected order
-        return tuple(kwargs[key] for key in self.allowed_kwargs if key in kwargs)
+        return kwargs
 
 
     def deserialize(self, **kwargs) -> Task:

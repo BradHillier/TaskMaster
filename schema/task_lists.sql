@@ -8,7 +8,6 @@ CREATE TABLE TaskLists (
 );
 
 INSERT INTO TaskLists (listName, username) VALUES
-('Inbox', 'test_user'),
-('Today', 'test_user'),
-('Upcoming', 'test_user'),
-('Chores', 'test_user');
+('Chores', 'test_user'),
+('Work', 'test_user'),
+('Personal', 'test_user');

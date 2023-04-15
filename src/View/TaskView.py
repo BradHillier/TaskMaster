@@ -1,6 +1,6 @@
 import tkinter
 import customtkinter
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 from tkinter import ttk
 from tkinter import messagebox
 import emoji
@@ -26,6 +26,8 @@ class TaskView(customtkinter.CTkFrame):
         self.padding = self.cget('height') / 2
         self.grid_columnconfigure(1, weight=1)
 
+        self.ID = ID
+
         # The UI will automatically update if the value of any of the below
         # StringVar's change
         if isCompleted:
@@ -50,6 +52,29 @@ class TaskView(customtkinter.CTkFrame):
         self._create_priority()
         self._create_buttons()
 
+    def update(self, **kwargs):
+        if 'isCompleted' in kwargs:
+            if kwargs.get('isCompleted'):
+                self.checkbox_status.set("on")
+            else:
+                self.checkbox_status.set("off")
+
+        if 'taskName' in kwargs:
+            self.task_name.set(kwargs.get('taskName'))
+
+        if 'dueDate' in kwargs:
+            days_till_due = (kwargs.get('dueDate') - datetime.today()).days
+            if days_till_due < 0:
+                due_str = f'{abs(days_till_due)} days ago'
+                self.date_label.configure(text_color='red')
+            else:
+                due_str = f'{days_till_due} days left'
+                self.date_label.configure(text_color='white')
+            self.date.set(due_str)
+        if 'priority' in kwargs:
+            priority_emoji = emoji.emojize(f'{kwargs.get("priority")}')
+            self.priority.set(priority_emoji)
+
 
 
     def _create_buttons(self):
@@ -62,14 +87,14 @@ class TaskView(customtkinter.CTkFrame):
         style = ttk.Style()
         style.configure('Icon.TButton', padding=(2, 0))
 
-        edit_button = customtkinter.CTkButton(
+        self.edit_button = customtkinter.CTkButton(
                 master=self,
                 text=edit_icon,
                 command=self.edit_button_event,
                 font=('Arial', 24),
                 width=5
         )
-        edit_button.grid(row=0, column=5, padx=(5), sticky="w")
+        self.edit_button.grid(row=0, column=5, padx=(5), sticky="w")
 
         self.trash_button = customtkinter.CTkButton(
                 master=self,
@@ -80,11 +105,9 @@ class TaskView(customtkinter.CTkFrame):
         self.trash_button.grid(row=0, column=5, padx=(50,5), sticky="e")
 
     def edit_button_event(self):
-        messagebox.showinfo("Info", "edit")
         pass
 
     def trash_button_event(self):
-        messagebox.showinfo("Info", "trash")
         pass
 
     def _create_checkbox(self):
@@ -126,12 +149,12 @@ class TaskView(customtkinter.CTkFrame):
                 sticky = 'w')
 
     def _create_due_date(self):
-        date_label = customtkinter.CTkLabel(
+        self.date_label = customtkinter.CTkLabel(
                 master = self, 
                 textvariable = self.date)
         if 'ago' in self.date.get():
-            date_label.configure(text_color='red')
-        date_label.grid(
+            self.date_label.configure(text_color='red')
+        self.date_label.grid(
                 row = 0, 
                 column = 2, 
                 # adds space between priority and due date

@@ -76,7 +76,7 @@ class TaskDAO:
                     isCompleted, 
                     priority)
                 VALUES (?, ?, ?, ?, ?, ?, ?)
-            """, task_data)
+            """, list(task_data.values()))
             conn.commit()
             return cur.lastrowid
 
@@ -158,14 +158,19 @@ class TaskDAO:
         checked against a list of allowed keywords, but this still opens a 
         potential security risk.
         """
+        kwargs = self.serializer.serialize(**kwargs)
         with sqlite3.connect(self.db) as conn:
             cur = conn.cursor()
 
             # stmt is constructed with params in provided order            
             sql = 'UPDATE Tasks SET'
-            for col in kwargs.keys(): 
+            for idx, col in enumerate(kwargs.keys()): 
                 if col in self.allowed_kwargs:
                     sql = sql + ''.join(f' {col} = (?) ')
+
+                    # add , after all except the last column to update
+                    if idx != len(kwargs.keys()) - 1:
+                        sql += ', '
                 else:
                     raise KeyError(f'Invalid keyword {col}')
             sql = sql + 'WHERE taskID = (?)'

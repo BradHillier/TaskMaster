@@ -77,20 +77,5 @@ class AddTask(ctk.CTkFrame):
         task_desc = self.task_desc_text.get("1.0", "end-1c")
         due_date = self.due_date_picker.get_date()
         priority = emoji.demojize(self.priority_combobox.get())
-
-        if not task_name:
-            messagebox.showerror("Task Name", "Please enter a task name")
-        elif not task_desc:
-            messagebox.showinfo("Task", "No description given")
-        elif not due_date:
-            messagebox.showerror("Task", "No Date?") # I don't think this will ever be the case since defualt date will be today
-        elif not priority:
-            messagebox.showerror("Task", "No priority")
-        else:
-            return (task_name, task_desc, due_date, priority)
-            messagebox.showinfo("New Task Details", f"Name: {task_name}\n \
-                                                      Desc: {task_desc}\n \
-                                                      Date: {due_date} \n \
-                                                      Priority: {priority}" \
-                                                      )
-            self.master.destroy()
+        return (task_name, task_desc, due_date, priority)
+        self.master.destroy()
