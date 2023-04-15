@@ -66,8 +66,10 @@ class TaskView(customtkinter.CTkFrame):
             days_till_due = (kwargs.get('dueDate') - datetime.today()).days
             if days_till_due < 0:
                 due_str = f'{abs(days_till_due)} days ago'
+                self.date_label.configure(text_color='red')
             else:
                 due_str = f'{days_till_due} days left'
+                self.date_label.configure(text_color='white')
             self.date.set(due_str)
         if 'priority' in kwargs:
             priority_emoji = emoji.emojize(f'{kwargs.get("priority")}')
@@ -147,12 +149,12 @@ class TaskView(customtkinter.CTkFrame):
                 sticky = 'w')
 
     def _create_due_date(self):
-        date_label = customtkinter.CTkLabel(
+        self.date_label = customtkinter.CTkLabel(
                 master = self, 
                 textvariable = self.date)
         if 'ago' in self.date.get():
-            date_label.configure(text_color='red')
-        date_label.grid(
+            self.date_label.configure(text_color='red')
+        self.date_label.grid(
                 row = 0, 
                 column = 2, 
                 # adds space between priority and due date
