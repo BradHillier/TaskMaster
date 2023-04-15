@@ -63,6 +63,10 @@ If `setup.sh` is run without using `source`, all the dependencies will be instal
 
 In it's current state, the login credentials are hard coded and registering new accounts has not been implemented. To access the app, input the following
 
+**username:** test_user     
+**password:** 123   
+
+The below account also exists, but it has only a single empty list 
 **username:** admin     
 **password:** password    
 

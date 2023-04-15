@@ -1,6 +1,7 @@
 import copy
 from src.Model.TaskDAO import TaskDAO
 from src.Model.TaskListDAO import TaskListDAO
+from src.Model.userDAO import UserDAO
 
 from src.Model.User import User
 from src.Model.Task import Task
@@ -9,15 +10,13 @@ from src.Model.TaskList import TaskList
 class TaskMaster:
 
     def __init__(self):
-        self.user = User(username='test_user', email='user@example.com')
+        self.user = None
         self.database = 'database.sqlite3'
 
         # data access objects
+        self.user_dao = UserDAO(self.database)
         self.task_dao = TaskDAO(self.database)
         self.task_list_dao = TaskListDAO(self.database)
-
-        self.all_lists: list[TaskList] = self.task_list_dao.getAll(self.user.username)
-        self.current_list: TaskList = self.all_lists[0]
 
     def getCurrentList():
         copy.deepycopy(self.current_list)
@@ -61,11 +60,39 @@ class TaskMaster:
         self.all_lists.remove(task_list)
 
 
-    def login(self):
-        pass
+    def login(self, username: str, password: str) -> bool:
+        """Log in the user with the specified username and password
+
+        :param username: The username of the user
+        :param password: The password of the user
+        :return: True if the login was successful, False otherwise
+        """
+        user_data = self.user_dao.getUserWithPassword(username)
+        if user_data is not None and user_data["password"] == password:
+            self.user = User(username=user_data["username"], email=user_data["email"])
+            # get all tasks if the user is verified in all_lists
+            self.all_lists = self.task_list_dao.getAll(self.user.username)
+            # setting curent list
+            self.current_list = self.all_lists[0] if self.all_lists else None
+            return True
+        # user not fond
+        return False 
 
     def logout(self):
-        pass
+        self.user = None
+        self.all_lists = []
+        self.current_list = None
 
-    def register(self):
-        pass
+    def register(self, username: str, password: str, email: str) -> bool:
+        """Register a new user with the specified username, password, and email
+
+        :param username: The username of the new user
+        :param password: The password of the new user
+        :param email: The email of the new user
+        :return: True if the registration was successful, False otherwise
+        """
+        try:
+            self.user_dao.create(username=username, password=password, email=email)
+            return True
+        except:
+            return False

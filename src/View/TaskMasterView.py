@@ -60,7 +60,7 @@ class App(customtkinter.CTk):
 
     def show_login_view(self, event):
         self.geometry('500x300')
-        self.login.grid(sticky='nsew')
+        self.login.grid(stick='nsew')
 
 if __name__ == '__main__':
     task_master = App()

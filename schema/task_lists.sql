@@ -10,4 +10,5 @@ CREATE TABLE TaskLists (
 INSERT INTO TaskLists (listName, username) VALUES
 ('Chores', 'test_user'),
 ('Work', 'test_user'),
-('Personal', 'test_user');
+('Personal', 'test_user'),
+('Default', 'admin');

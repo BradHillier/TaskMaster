@@ -17,8 +17,13 @@ class Controller:
     def __init__(self):
         self.model = TaskMaster()
         self.view = App()
-        self.switchTaskList(0)
+
+        self.view.login.login_button.bind('<Button-1>', self.login)
+
+        # This has to be the last thing in __init__
+        self.view.mainloop() 
     
+    def loadUserLists(self):
         # add event bindings for renaming and selecting a task list
         sidebar = self.view.task_master.side_bar
         for task_list in self.model.all_lists:
@@ -33,6 +38,7 @@ class Controller:
             new_list_entry.bind(
                     '<Return>', partial(self.renameTaskList, list_idx))
 
+        # Indicate to the user which task list is initially selected
         sidebar.select_list(sidebar.task_lists[0].button)
 
         # Bind events for sorting tasks
@@ -52,16 +58,11 @@ class Controller:
         self.view.task_master.list_view_frame.priority.down_button.bind(
                 '<Button-1>', partial(self.sortTasks, lambda task : priority_dict[task.priority], False))
 
-
-        
-
         add_task_btn = self.view.task_master.list_view_frame.plus_button
         add_task_btn.bind( '<Button-1>', self.createTaskInput)
 
 
             
-        # This has to be the last thing in __init__
-        self.view.mainloop() 
 
     def retreiveTaskView(self, task: Task):
         """Create a TaskView using the provided Task and place it in the UI
@@ -185,6 +186,21 @@ class Controller:
         # re-render the tasks
         for task in self.model.current_list:
             self.retreiveTaskView(task)
+
+    def login(self, event):
+        username = self.view.login.username_entry.get()
+        password = self.view.login.password_entry.get()
+        if self.model.login(username, password):
+            # clear the entries
+            self.view.login.username_entry.delete(0, 'end')
+            self.view.login.password_entry.delete(0, 'end')
+            self.view.task_master.side_bar.clear()
+            self.loadUserLists()
+            self.switchTaskList(0)
+            self.view.login.grid_remove()
+            self.view.task_master.top_bar.welcome_message.set(f'Welcome, {username}')
+        else:
+            print('invalid credentials')
 
 if __name__ == '__main__':
     myContrller = Controller()

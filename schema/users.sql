@@ -7,4 +7,5 @@ CREATE TABLE Users (
 );
 
 INSERT INTO Users VALUES ('test_user', '123', 'user@example.com');
+INSERT INTO Users VALUES ('admin', 'password', 'admin@example.com');
 

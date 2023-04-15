@@ -41,17 +41,7 @@ class LoginPage(ctk.CTkFrame):
         self.register_button.grid(row=4, column=1, columnspan=2, padx=10, pady=5)
 
     def login(self, event=None):
-        username = self.username_entry.get()
-        password = self.password_entry.get()
-
-        if username == "admin" and password == "password":
-            messagebox.showinfo("Login", "Login successful!")
-
-            # the windowing being hidden is currently the trigger for switching 
-            # to the logged in view
-            self.grid_remove()
-        else:
-            messagebox.showerror("Login", "Incorrect username or password")
+        pass
 
     def register(self):
         register_window = ctk.CTkToplevel(self.master)

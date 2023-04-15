@@ -203,3 +203,7 @@ class SideBar(customtkinter.CTkFrame):
             new_task_list = TaskListNavButton(self, fg_color='transparent')
         new_task_list.grid(row=self.grid_size()[1], column=0)
         self.task_lists.append(new_task_list)
+
+    def clear(self):
+        for task_list in self.task_lists:
+            task_list.grid_remove()
