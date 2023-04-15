@@ -35,6 +35,24 @@ class Controller:
 
         sidebar.select_list(sidebar.task_lists[0].button)
 
+        # Bind events for sorting tasks
+        self.view.task_master.list_view_frame.due_date.up_button.bind(
+                '<Button-1>', partial(self.sortTasks, lambda task : task.dueDate, True))
+        self.view.task_master.list_view_frame.due_date.down_button.bind(
+                '<Button-1>', partial(self.sortTasks, lambda task : task.dueDate, False))
+
+        # used to sort by priority
+        priority_dict = {
+                ':red_circle:': 0,
+                ':yellow_circle:': 1,
+                ':green_circle:': 2
+            }
+        self.view.task_master.list_view_frame.priority.up_button.bind(
+                '<Button-1>', partial(self.sortTasks, lambda task : priority_dict[task.priority], True))
+        self.view.task_master.list_view_frame.priority.down_button.bind(
+                '<Button-1>', partial(self.sortTasks, lambda task : priority_dict[task.priority], False))
+
+
         
 
         add_task_btn = self.view.task_master.list_view_frame.plus_button
@@ -160,6 +178,13 @@ class Controller:
         self.model.deleteTask(task)
         task_view.destroy()
 
+    def sortTasks(self, func, reverse, event):
+        self.model.current_list.sort(key=func, reverse=reverse)
+        self.view.task_master.list_view_frame.task_scroller.clear()
+
+        # re-render the tasks
+        for task in self.model.current_list:
+            self.retreiveTaskView(task)
 
 if __name__ == '__main__':
     myContrller = Controller()
