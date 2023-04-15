@@ -1,4 +1,4 @@
-import sys
+import emoji
 import dateparser
 import datetime
 from functools import partial
@@ -143,7 +143,7 @@ class Controller:
             'description': widget.task_desc_text.get("1.0", "end-1c"),
             'dueDate': dateparser.parse(widget.due_date_picker.get_date()),
             'isCompleted': task.isCompleted,
-            'priority': widget.priority_combobox.get()
+            'priority': emoji.demojize(widget.priority_combobox.get())
         }
         self.model.updateTask(task, **keywords)
         widget.master.destroy()
@@ -165,7 +165,7 @@ class Controller:
                 'description': widget.task_desc_text.get("1.0", "end-1c"),
                 'dueDate': dateparser.parse(widget.due_date_picker.get_date()),
                 'isCompleted': False,
-                'priority': widget.priority_combobox.get()
+                'priority': emoji.demojize(widget.priority_combobox.get())
             }
         self.model.createTask(**keywords)
         self.retreiveTaskView(self.model.current_list[-1])
