@@ -81,5 +81,4 @@ This project was created as part of **CSCI 331 - Object Oriented Programming** a
 There are still several features that have no been implemented including:
 
 * registering new accounts
-* editing tasks
 * creating new task lists
