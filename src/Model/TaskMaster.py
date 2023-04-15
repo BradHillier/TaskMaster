@@ -10,16 +10,13 @@ from src.Model.TaskList import TaskList
 class TaskMaster:
 
     def __init__(self):
-        self.user = User(username='test_user', email='user@example.com')
+        self.user = None
         self.database = 'database.sqlite3'
 
         # data access objects
         self.user_dao = UserDAO(self.database)
         self.task_dao = TaskDAO(self.database)
         self.task_list_dao = TaskListDAO(self.database)
-
-        self.all_lists: list[TaskList] = self.task_list_dao.getAll(self.user.username)
-        self.current_list: TaskList = self.all_lists[0]
 
     def getCurrentList():
         copy.deepycopy(self.current_list)
