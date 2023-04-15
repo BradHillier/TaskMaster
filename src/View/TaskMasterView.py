@@ -54,9 +54,6 @@ class App(customtkinter.CTk):
         self.task_master = TaskMasterView(self, fg_color='transparent')
         self.task_master.bind('<Unmap>', self.show_login_view)
 
-        # allows task list buttons text entry to hide when clicking outside it
-        self.bind('<Button-1>', lambda event : event.widget.focus())
-
     def show_main_view(self, event):
         self.geometry('1000x600')
         self.task_master.grid(sticky='nsew')
