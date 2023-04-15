@@ -37,7 +37,7 @@ To download the repository first run
 git clone https://github.com/BradHillier/TaskMaster
 ``` 
 
-Once the repo has been cloned, use `cd taskmaster` to enter the newly created taskmaster directory. From here, the entirety of the required setup can be handled by running
+Once the repo has been cloned, use `cd TaskMaster` to enter the newly created taskmaster directory. From here, the entirety of the required setup can be handled by running
 
 ```bash
 source setup.sh
