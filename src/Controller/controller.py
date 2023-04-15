@@ -19,6 +19,7 @@ class Controller:
         self.view = App()
 
         self.view.login.login_button.bind('<Button-1>', self.login)
+        self.view.task_master.top_bar.button.bind('<Button-1>', self.logout) 
 
         # This has to be the last thing in __init__
         self.view.mainloop() 
@@ -188,6 +189,7 @@ class Controller:
             self.retreiveTaskView(task)
 
     def login(self, event):
+        self.model.logout()
         username = self.view.login.username_entry.get()
         password = self.view.login.password_entry.get()
         if self.model.login(username, password):
@@ -201,6 +203,9 @@ class Controller:
             self.view.task_master.top_bar.welcome_message.set(f'Welcome, {username}')
         else:
             print('invalid credentials')
+
+    def logout(self, event):
+        self.model.logout
 
 if __name__ == '__main__':
     myContrller = Controller()

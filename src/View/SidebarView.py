@@ -207,3 +207,4 @@ class SideBar(customtkinter.CTkFrame):
     def clear(self):
         for task_list in self.task_lists:
             task_list.grid_remove()
+        self.task_lists.clear()
