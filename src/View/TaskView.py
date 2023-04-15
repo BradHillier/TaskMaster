@@ -1,6 +1,6 @@
 import tkinter
 import customtkinter
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 from tkinter import ttk
 from tkinter import messagebox
 import emoji
@@ -26,6 +26,8 @@ class TaskView(customtkinter.CTkFrame):
         self.padding = self.cget('height') / 2
         self.grid_columnconfigure(1, weight=1)
 
+        self.ID = ID
+
         # The UI will automatically update if the value of any of the below
         # StringVar's change
         if isCompleted:
@@ -49,6 +51,27 @@ class TaskView(customtkinter.CTkFrame):
         self._create_due_date()
         self._create_priority()
         self._create_buttons()
+
+    def update(self, **kwargs):
+        if 'isCompleted' in kwargs:
+            if kwargs.get('isCompleted'):
+                self.checkbox_status.set("on")
+            else:
+                self.checkbox_status.set("off")
+
+        if 'taskName' in kwargs:
+            self.task_name.set(kwargs.get('taskName'))
+
+        if 'dueDate' in kwargs:
+            days_till_due = (kwargs.get('dueDate') - datetime.today()).days
+            if days_till_due < 0:
+                due_str = f'{abs(days_till_due)} days ago'
+            else:
+                due_str = f'{days_till_due} days left'
+            self.date.set(due_str)
+        if 'priority' in kwargs:
+            priority_emoji = emoji.emojize(f'{kwargs.get("priority")}')
+            self.priority.set(priority_emoji)
 
 
 

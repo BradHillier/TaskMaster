@@ -128,8 +128,10 @@ class Controller:
         for k,v in keywords.items():
             print(f"{k} : {v}")
         self.model.updateTask(task, **keywords)
-        self.retreiveTaskView(self.model.current_list[-1])
         widget.master.destroy()
+        all_tasks = self.view.task_master.list_view_frame.task_scroller.task_views
+        task_view = [t_v for t_v in all_tasks if t_v.ID == task.ID][0]
+        task_view.update(**keywords)
 
     def createTaskInput(self, event) -> AddTask:
         edit_window = self.view.task_master.list_view_frame.open_edit_task_page()
