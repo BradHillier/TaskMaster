@@ -102,8 +102,10 @@ class Controller:
             list_view.list_name.set(self.model.current_list.name)
 
     def editTask(self, event, task):
-        print(task)
         existing_task_window = self.createTaskInput(event)
+        
+        existing_task_window.button.configure(text="Update Task")
+        existing_task_window.due_date_picker.see(dateparser.parse(task.dueDate))
         existing_task_window.master.title("EDIT: " + task.name)
         existing_task_window.task_name_entry.insert(0, task.name)
         existing_task_window.task_desc_text.insert("1.0", task.description or "")
@@ -125,8 +127,6 @@ class Controller:
             'isCompleted': task.isCompleted,
             'priority': widget.priority_combobox.get()
         }
-        for k,v in keywords.items():
-            print(f"{k} : {v}")
         self.model.updateTask(task, **keywords)
         widget.master.destroy()
         all_tasks = self.view.task_master.list_view_frame.task_scroller.task_views
