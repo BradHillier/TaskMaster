@@ -17,11 +17,15 @@ CREATE TABLE Tasks (
 );
 
 INSERT INTO Tasks (taskName, username, listID, description, dueDate, isCompleted, priority) VALUES
-('wash the dishes', 'test_user', 1, NULL,'2023-04-21', TRUE, 'high'),
-('do the laundry', 'test_user', 1, NULL,'2023-04-19', TRUE, NULL),
-('mow the lawn', 'test_user', 1, 'cut all the grass in the front yard with my lawn mower', '2023-04-20', TRUE, NULL),
-('Buy groceries', 'test_user', 1, 'Milk, eggs, bread, and cheese', '2023-04-05', 0, 'high'),
-('Pay rent', 'test_user',  1, 'Monthly rent payment for apartment', '2023-04-10', 0, 'high'),
-('Finish report', 'test_user', 1, 'Complete project report and submit to supervisor', '2023-04-15', 0, 'medium'),
-('Plan vacation', 'test_user', 2, 'Research and book flights, accommodations, and activities for upcoming vacation', '2023-05-01', 0, 'low'),
-('Call mom', 'test_user', 2, 'Check in and catch up with mom', '2023-04-07', 0, 'medium');
+('wash the dishes', 'test_user', 1, NULL,'2023-04-21', TRUE, ':red_circle:'),
+('do the laundry', 'test_user', 1, NULL,'2023-04-19', TRUE, ':green_circle:'),
+('mow the lawn', 'test_user', 1, 'cut all the grass in the front yard with my lawn mower', '2023-04-20', TRUE, ':green_circle:'),
+('Buy groceries', 'test_user', 1, 'Milk, eggs, bread, and cheese', '2023-04-05', 0, ':red_circle:'),
+('Pay rent', 'test_user',  1, 'Monthly rent payment for apartment', '2023-04-10', 0, ':red_circle:'),
+('Finish report', 'test_user', 1, 'Complete project report and submit to supervisor', '2023-04-15', 0, ':yellow_circle:'),
+('Attend meeting with team', 'test_user', 2, 'Discuss progress and goals for current project', '2023-04-18', 0, ':red_circle:'),
+('Complete project deliverables', 'test_user', 2, 'Finish coding and testing for project', '2023-04-25', 0, ':red_circle:'),
+('Schedule doctor appointment', 'test_user', 3, 'Annual check-up with family doctor', '2023-05-15', 0, ':yellow_circle:'),
+('Buy birthday gift for friend', 'test_user', 3, 'Find and purchase gift for upcoming birthday', '2023-04-30', 0, ':green_circle:'),
+('Research new hobby', 'test_user', 3, 'Explore options and interests for a new hobby', '2023-04-22', 0, ':yellow_circle:'),
+('Fix leaky faucet', 'test_user', 3, 'Repair leaky faucet in bathroom sink', '2023-04-19', 0, ':red_circle:');
