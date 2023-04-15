@@ -103,11 +103,9 @@ class TaskView(customtkinter.CTkFrame):
         self.trash_button.grid(row=0, column=5, padx=(50,5), sticky="e")
 
     def edit_button_event(self):
-        messagebox.showinfo("Info", "edit")
         pass
 
     def trash_button_event(self):
-        messagebox.showinfo("Info", "trash")
         pass
 
     def _create_checkbox(self):
