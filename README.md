@@ -37,7 +37,7 @@ To download the repository first run
 git clone https://github.com/BradHillier/TaskMaster
 ``` 
 
-Once the repo has been cloned, use `cd taskmaster` to enter the newly created taskmaster directory. From here, the entirety of the required setup can be handled by running
+Once the repo has been cloned, use `cd TaskMaster` to enter the newly created taskmaster directory. From here, the entirety of the required setup can be handled by running
 
 ```bash
 source setup.sh
@@ -63,7 +63,7 @@ If `setup.sh` is run without using `source`, all the dependencies will be instal
 
 In it's current state, the login credentials are hard coded and registering new accounts has not been implemented. To access the app, input the following
 
-**username:** Admin     
+**username:** admin     
 **password:** password    
 
 ## Support
@@ -81,5 +81,4 @@ This project was created as part of **CSCI 331 - Object Oriented Programming** a
 There are still several features that have no been implemented including:
 
 * registering new accounts
-* editing tasks
 * creating new task lists
